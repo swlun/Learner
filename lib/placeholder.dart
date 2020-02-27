@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
 
-class PlaceHolder extends StatelessWidget {
- final Color color;
+import './home.dart';
+import './favourite.dart';
+import './schedule.dart';
+import './chat.dart';
+import './profile.dart';
 
- PlaceHolder(this.color);
+class PlaceHolder extends StatelessWidget {
+ final int tab;
+
+ PlaceHolder(this.tab);
 
  @override
  Widget build(BuildContext context) {
-   return Container(
-     color: color,
-   );
+    print(tab);
+    switch(tab) {
+      case 0: return Home('Home');
+      case 1: return Favourite('favourite');
+      case 2: return Schedule('schedule');
+      case 3: return Chat('chat');
+      case 4: return Profile('profile');
+      default: return Home('Default');
+    }
  }
 }
