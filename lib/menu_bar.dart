@@ -13,8 +13,8 @@ class _HomeState extends State<Home> {
   int _currentIndex = 0;
   
   final List<Widget> _children = [
-    PlaceHolder(0),
-    PlaceHolder(1),
+    PlaceHolder(_tabs.home.index),
+    PlaceHolder(_tabs.favourite.index),
     PlaceHolder(_tabs.schedule.index),
     PlaceHolder(_tabs.chat.index),
     PlaceHolder(_tabs.profile.index)
