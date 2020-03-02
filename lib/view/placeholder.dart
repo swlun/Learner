@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import './home.dart';
-import './favourite.dart';
-import './schedule.dart';
-import './chat.dart';
-import './profile.dart';
+import './home/home.dart';
+import './favourite/favourite.dart';
+import './schedule/schedule.dart';
+import './chat/chat.dart';
+import './profile/profile.dart';
 
 class PlaceHolder extends StatelessWidget {
  final int tab;
@@ -13,7 +13,6 @@ class PlaceHolder extends StatelessWidget {
 
  @override
  Widget build(BuildContext context) {
-    print(tab);
     switch(tab) {
       case 0: return Home('Home');
       case 1: return Favourite('favourite');

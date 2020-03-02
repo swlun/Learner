@@ -25,7 +25,7 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text('Learner'),
       ),
-      body: Column(children: [Text(_currentIndex.toString()),_children[_currentIndex]]),
+      body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
         currentIndex: _currentIndex,
