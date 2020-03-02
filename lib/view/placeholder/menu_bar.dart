@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import './placeholder.dart';
 
-class Home extends StatefulWidget {
+class MenuBar extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _HomeState();
+    return _MenuBarState();
   }
 }
 
 enum _tabs { home, favourite, schedule, chat, profile}
-class _HomeState extends State<Home> {
+class _MenuBarState extends State<MenuBar> {
   int _currentIndex = 0;
   
   final List<Widget> _children = [
