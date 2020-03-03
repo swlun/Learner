@@ -1,21 +1,32 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:learner/models/user.dart';
 
 class AuthService {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-   //sign in anonymous
-   Future signInAnonymous() async {
-     try {
-      AuthResult result = await _auth.signInAnonymously();
-      FirebaseUser user = result.user;
-      return user;
-     }
-     catch(e) {
-       print(e.toString());
-       return null;
-     }
-   }
+  //create user obj based on FirebaseUser
+  User _userFromFirebaseUser(FirebaseUser user) {
+    return user != null ? User(uid: user.uid) : null;
+  }
+
+  //auth user change stream
+  Stream<User> get user {
+    return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
+  }
+
+  //sign in anonymous
+  Future signInAnonymous() async {
+    try {
+    AuthResult result = await _auth.signInAnonymously();
+    FirebaseUser user = result.user;
+    return _userFromFirebaseUser(user);
+    }
+    catch(e) {
+      print(e.toString());
+      return null;
+    }
+  }
 
    //sign in with email & password
 
