@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learner/services/auth.dart';
+import 'package:learner/shared/loading.dart';
 import './placeholder.dart';
 
 class DefaultScreen extends StatefulWidget {
@@ -13,6 +14,7 @@ enum _tabs { home, favourite, schedule, chat, profile }
 
 class _ScreenState extends State<DefaultScreen> {
   final AuthService _auth = AuthService();
+  bool loading = false;
   int _currentIndex = 0;
 
   final List<Widget> _children = [
@@ -24,14 +26,16 @@ class _ScreenState extends State<DefaultScreen> {
   ];
 
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
       appBar: AppBar(
         title: Text('Learner'),
         elevation: 0.0,
         actions: <Widget>[
           FlatButton.icon(
               onPressed: () async {
+                setState(() => loading = true);
                 await _auth.signOut();
+                setState(() => loading = false);
               },
               icon: Icon(Icons.exit_to_app),
               label: Text('Logout'))
