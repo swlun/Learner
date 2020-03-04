@@ -1,4 +1,3 @@
-
 class ActivitiesData {
   static final getData = [
     {
