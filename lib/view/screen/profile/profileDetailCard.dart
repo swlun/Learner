@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learner/models/user_profile.dart';
-import 'package:learner/view/profile/usertile_temp.dart';
+import 'package:learner/view/screen/profile/usertile_temp.dart';
 import 'package:provider/provider.dart';
 
 class ProfileDetail extends StatefulWidget {

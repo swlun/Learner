@@ -58,4 +58,28 @@ class DatabaseService {
     }).toList();
   }
 
+  //user detail change stream
+  // Stream<UserProfile> get userProfile {
+  //   return _userDetailsFromSnapshot(user)
+  // }
+
+  // //get user details
+  // UserProfile _userDetailsFromSnapshot(QuerySnapshot snapshot, User user) {
+  //   //usersCollection.document(user.uid).snapshots()
+  //   snapshot.documents.map((doc)
+  //     .listen((doc) {
+  //       return UserProfile (
+  //         name: doc.data['name'] ?? '',
+  //         age: doc.data['age'] ?? '',
+  //         location: doc.data['location'] ?? '',
+  //         contactNumber: doc.data['contactNumber'] ?? '',
+  //         occupation: doc.data['occupation'] ?? '',
+  //         description: doc.data['description'] ?? '',
+  //         student: doc.data['student'] ?? '',
+  //         teacher: doc.data['teacher'] ?? '',
+  //       ); 
+  //   }); 
+  // }
+
+  
 }

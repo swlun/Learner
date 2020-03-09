@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../home/home.dart';
-import '../favourite/favourite.dart';
-import '../schedule/schedule.dart';
-import '../chat/chat.dart';
-import '../profile/profile.dart';
+import 'package:learner/view/screen/home/home.dart';
+import 'package:learner/view/screen/favourite/favourite.dart';
+import 'package:learner/view/screen/schedule/schedule.dart';
+import 'package:learner/view/screen/chat/chat.dart';
+import 'package:learner/view/screen/profile/profile.dart';
 
 class PlaceHolder extends StatelessWidget {
  final int tab;

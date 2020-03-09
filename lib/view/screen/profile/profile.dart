@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learner/models/user_profile.dart';
 import 'package:learner/services/database.dart';
-import 'package:learner/view/profile/profileDetail.dart';
+import 'package:learner/view/profile/profileDetailCard.dart';
 import 'package:provider/provider.dart';
 
 class Profile extends StatelessWidget {
