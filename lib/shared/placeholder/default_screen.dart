@@ -26,54 +26,60 @@ class _ScreenState extends State<DefaultScreen> {
   ];
 
   Widget build(BuildContext context) {
-    return loading ? Loading() : Scaffold(
-      appBar: AppBar(
-        title: Text('Learner'),
-        elevation: 0.0,
-        actions: <Widget>[
-          FlatButton.icon(
-              onPressed: () async {
-                setState(() => loading = true);
-                await _auth.signOut();
-                setState(() => loading = false);
-              },
-              icon: Icon(Icons.exit_to_app),
-              label: Text('Logout'))
-        ],
-      ),
-      body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-          onTap: onTabTapped,
-          currentIndex: _currentIndex,
-          type: BottomNavigationBarType.fixed,
-          items: [
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.home, color: Colors.grey[800]),
-              title:
-                  new Text('Home', style: TextStyle(color: Colors.grey[800])),
+    return loading
+        ? Loading()
+        : Scaffold(
+          backgroundColor: Colors.blue[100],
+            appBar: AppBar(
+              title: Text('Learner'),
+              elevation: 0.0,
+              actions: <Widget>[
+                FlatButton.icon(
+                    onPressed: () async {
+                      setState(() => loading = true);
+                      await _auth.signOut();
+                      setState(() => loading = false);
+                    },
+                    icon: Icon(Icons.exit_to_app),
+                    label: Text('Logout'))
+              ],
             ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.favorite, color: Colors.grey[800]),
-              title: new Text('Favourite',
-                  style: TextStyle(color: Colors.grey[800])),
+            body: Container(
+              child: _children[_currentIndex],
             ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.calendar_today, color: Colors.grey[800]),
-              title: new Text('Schedule',
-                  style: TextStyle(color: Colors.grey[800])),
-            ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.chat, color: Colors.grey[800]),
-              title:
-                  new Text('Chat', style: TextStyle(color: Colors.grey[800])),
-            ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.person, color: Colors.grey[800]),
-              title: new Text('Profile',
-                  style: TextStyle(color: Colors.grey[800])),
-            ),
-          ]),
-    );
+            bottomNavigationBar: BottomNavigationBar(
+                onTap: onTabTapped,
+                currentIndex: _currentIndex,
+                type: BottomNavigationBarType.fixed,
+                items: [
+                  BottomNavigationBarItem(
+                    icon: new Icon(Icons.home, color: Colors.grey[800]),
+                    title: new Text('Home',
+                        style: TextStyle(color: Colors.grey[800])),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: new Icon(Icons.favorite, color: Colors.grey[800]),
+                    title: new Text('Favourite',
+                        style: TextStyle(color: Colors.grey[800])),
+                  ),
+                  BottomNavigationBarItem(
+                    icon:
+                        new Icon(Icons.calendar_today, color: Colors.grey[800]),
+                    title: new Text('Schedule',
+                        style: TextStyle(color: Colors.grey[800])),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: new Icon(Icons.chat, color: Colors.grey[800]),
+                    title: new Text('Chat',
+                        style: TextStyle(color: Colors.grey[800])),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: new Icon(Icons.person, color: Colors.grey[800]),
+                    title: new Text('Profile',
+                        style: TextStyle(color: Colors.grey[800])),
+                  ),
+                ]),
+          );
   }
 
   void onTabTapped(int index) {

@@ -16,11 +16,7 @@ class Profile extends StatelessWidget {
 
     return FutureProvider<UserProfile>.value(
       value: DatabaseService(uid: user.uid).userProfile,
-      child: Scaffold(
-        
-         backgroundColor: Colors.blue[100],
-         body: ProfileDetailCard(),
-      ), 
+      child: ProfileDetailCard(),
     );
   }
 }
