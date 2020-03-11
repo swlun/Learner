@@ -23,6 +23,7 @@ class _ProfileDetailCardState extends State<ProfileDetailCard> {
           ),
           title: Text(user.name),
           subtitle: Text('Description: ${user.description}'),
+          trailing: Icon(Icons.border_color),
           onTap: () {
             ProfileShowDetails();
           },
