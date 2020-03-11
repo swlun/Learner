@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:learner/models/user.dart';
 
-import 'package:learner/view/placeholder/default_screen.dart';
+import 'package:learner/shared/placeholder/default_screen.dart';
 import './view/authenticationScreen/authenticate.dart';
 
 class Wrapper extends StatelessWidget {
@@ -10,12 +10,13 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
 
+    print('this: ' + user.uid);
+
     if(user == null) {
       return Authenticate();
     }
     else {
       return DefaultScreen();
     }
-    
   }
 }

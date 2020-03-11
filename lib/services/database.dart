@@ -47,7 +47,7 @@ class DatabaseService {
     return snapshot.documents.map((doc) {
       return UserProfile(
         name: doc.data['name'] ?? '',
-        age: doc.data['age'] ?? '',
+        age: doc.data['age'] ?? 0,
         location: doc.data['location'] ?? '',
         contactNumber: doc.data['contactNumber'] ?? '',
         occupation: doc.data['occupation'] ?? '',
@@ -58,28 +58,18 @@ class DatabaseService {
     }).toList();
   }
 
-  //user detail change stream
-  // Stream<UserProfile> get userProfile {
-  //   return _userDetailsFromSnapshot(user)
-  // }
+  Future<UserProfile> get userProfile async {
+    final profile = await usersCollection.document(this.uid).get();
 
-  // //get user details
-  // UserProfile _userDetailsFromSnapshot(QuerySnapshot snapshot, User user) {
-  //   //usersCollection.document(user.uid).snapshots()
-  //   snapshot.documents.map((doc)
-  //     .listen((doc) {
-  //       return UserProfile (
-  //         name: doc.data['name'] ?? '',
-  //         age: doc.data['age'] ?? '',
-  //         location: doc.data['location'] ?? '',
-  //         contactNumber: doc.data['contactNumber'] ?? '',
-  //         occupation: doc.data['occupation'] ?? '',
-  //         description: doc.data['description'] ?? '',
-  //         student: doc.data['student'] ?? '',
-  //         teacher: doc.data['teacher'] ?? '',
-  //       ); 
-  //   }); 
-  // }
-
-  
+    return UserProfile(
+      name: profile.data['name'] ?? '',
+      age: profile.data['age'] ?? 0,
+      location: profile.data['location'] ?? '',
+      contactNumber: profile.data['contactNumber'] ?? '',
+      occupation: profile.data['occupation'] ?? '',
+      description: profile.data['description'] ?? '',
+      student: profile.data['student'] ?? '',
+      teacher: profile.data['teacher'] ?? '',
+    );
+  }
 }

@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:learner/models/user_profile.dart';
 import 'package:learner/view/screen/profile/usertile_temp.dart';
-import 'package:provider/provider.dart';
 
-class ProfileDetail extends StatefulWidget {
+class ProfileDetailCard extends StatefulWidget {
   @override
-  _ProfileDetailState createState() => _ProfileDetailState();
+  _ProfileDetailCardState createState() => _ProfileDetailCardState();
+  
 }
 
-class _ProfileDetailState extends State<ProfileDetail> {
+class _ProfileDetailCardState extends State<ProfileDetailCard> {
   @override
   Widget build(BuildContext context) {
 
-    final users = Provider.of<List<UserProfile>>(context);
+    // final user = Provider.of<UserProfile>(context);
+    // final userid = Provider.of<User>(context);
 
     return ListView.builder(
-      itemCount: users.length,
+      itemCount: 1,
       itemBuilder: (context, index) {
-        return UserTile(users: users[index]); 
+        return UserTile(); 
       },
     );
   }
