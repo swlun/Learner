@@ -1,18 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:learner/models/user_profile.dart';
-import 'package:learner/services/database.dart';
-import 'package:learner/view/screen/profile/screen/profileData.dart';
+import 'package:learner/shared/loading.dart';
 import 'package:provider/provider.dart';
 
-class ProfileShowDetails extends StatelessWidget {
+class ProfileShowDetails extends StatefulWidget {
+  @override
+  _ProfileShowDetailsState createState() => _ProfileShowDetailsState();
+}
+
+class _ProfileShowDetailsState extends State<ProfileShowDetails> {
   @override
   Widget build(BuildContext context) {
-    print('In profileShowDetail');
-    var user;
-    
-    return FutureProvider<UserProfile>.value(
-      value: DatabaseService(uid: user.uid).userProfile,
-      child: ProfileData(),
+    final user = Provider.of<UserProfile>(context);
+
+    return user == null ? Loading() : Container(
+       color: Colors.white,
+       child: Column(
+         children: <Widget>[
+           ListTile(
+              leading: CircleAvatar(
+                radius: 25.0,
+                backgroundColor: Colors.blue,
+              ),
+              title: Text('Hi, ' + user.name),
+              subtitle: Text('Joined in ${getJoinMonth(user.joinedIn)}, ${getJoinYear(user.joinedIn)}')
+           ),
+           Divider(color: Colors.grey,)
+         ],
+       ),
     );
+  }
+
+  String getJoinMonth(String userJoinIn) {
+    return userJoinIn.substring(0, userJoinIn.length-4);
+  }
+
+  String getJoinYear(String userJoinIn) {
+    return userJoinIn.substring(userJoinIn.length-4, userJoinIn.length);
   }
 }
