@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:learner/models/user_profile.dart';
 import 'package:learner/shared/loading.dart';
 
-import '../profile.dart';
-
 class ProfileShowDetails extends StatefulWidget {
   final UserProfile user;
 

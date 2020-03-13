@@ -24,6 +24,7 @@ class Profile extends StatelessWidget {
                     leading: CircleAvatar(
                       radius: 25.0,
                       backgroundColor: Colors.blue,
+                      //backgroundImage: AssetImage('assets/images/profile_background'),
                     ),
                     title: Text(myProfile.name),
                     subtitle: InkWell(
