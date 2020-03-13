@@ -2,20 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:learner/models/user_profile.dart';
 import 'package:learner/shared/loading.dart';
 
-class ProfileShowDetails extends StatefulWidget {
+class ProfileShowDetails extends StatelessWidget {
   final UserProfile user;
 
   ProfileShowDetails({this.user});
 
   @override
-  _ProfileShowDetailsState createState() => _ProfileShowDetailsState();
-}
-
-class _ProfileShowDetailsState extends State<ProfileShowDetails> {
-  @override
   Widget build(BuildContext context) {
-    print('this widget:' + widget.user.joinedIn);
-    return widget.user == null
+    return this.user == null
         ? Loading()
         : Material(
             child: Scaffold(
@@ -43,13 +37,13 @@ class _ProfileShowDetailsState extends State<ProfileShowDetails> {
                         backgroundColor: Colors.blue,
                       ),
                       title: Text(
-                        'Hi, ' + widget.user.name,
+                        'Hi, ' + this.user.name,
                         style: TextStyle(
                           fontSize: 20,
                         ),
                       ),
                       subtitle: Text(
-                        'Joined in ${getJoinMonth(widget.user.joinedIn)}, ${getJoinYear(widget.user.joinedIn)}',
+                        'Joined in ${getJoinMonth(this.user.joinedIn)}, ${getJoinYear(this.user.joinedIn)}',
                         style: TextStyle(
                           fontSize: 20,
                         ),
@@ -61,7 +55,7 @@ class _ProfileShowDetailsState extends State<ProfileShowDetails> {
                     title: Text('About'),
                     subtitle: ListTile(
                       leading: Icon(Icons.home),
-                      title: Text('Lives in ${widget.user.location}'),
+                      title: Text('Lives in ${this.user.location}'),
                     ),
                   )
                 ],
@@ -69,12 +63,19 @@ class _ProfileShowDetailsState extends State<ProfileShowDetails> {
             ),
           ));
   }
+}
 
-  String getJoinMonth(String userJoinIn) {
-    return userJoinIn.substring(0, userJoinIn.length - 4);
-  }
+String getJoinMonth(String userJoinIn) {
+  return userJoinIn.substring(0, userJoinIn.length - 4);
+}
 
-  String getJoinYear(String userJoinIn) {
-    return userJoinIn.substring(userJoinIn.length - 4, userJoinIn.length);
-  }
+String getJoinYear(String userJoinIn) {
+  return userJoinIn.substring(userJoinIn.length - 4, userJoinIn.length);
+}
+
+void navigateToEditDetails(context, UserProfile user) {
+  Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => ProfileShowDetails(user: user)));
 }
