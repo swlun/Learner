@@ -10,19 +10,24 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
+    //final userProfile = Provider.of<UserProfile>(context);
 
     return FutureProvider<UserProfile>.value(
       value: DatabaseService(uid: user.uid).userProfile,
       child: Container(
-        child: RaisedButton(onPressed: () {
-          navigateToProfileShowDetail(context);
-        }),
+        child: Consumer<UserProfile>(
+          builder: (context, myProfile, child) {
+            return RaisedButton(onPressed: () {
+                      navigateToProfileShowDetail(context, myProfile);
+                    });
+          }
+        )
       ),
     );
   }
 
-  Future navigateToProfileShowDetail(context) async {
+  void navigateToProfileShowDetail(context, UserProfile user) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ProfileShowDetails()));
+        context, MaterialPageRoute(builder: (context) => ProfileShowDetails(user: user)));
   }
 }

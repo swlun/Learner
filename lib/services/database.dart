@@ -70,6 +70,7 @@ class DatabaseService {
       description: profile.data['description'] ?? '',
       student: profile.data['student'] ?? '',
       teacher: profile.data['teacher'] ?? '',
+      joinedIn: profile.data['joinedIn'] ?? '',
     );
   }
 }
