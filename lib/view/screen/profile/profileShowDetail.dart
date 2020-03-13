@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:learner/models/user_profile.dart';
 import 'package:learner/shared/loading.dart';
+import 'package:learner/view/screen/profile/profileEdit.dart';
 
 class ProfileShowDetails extends StatelessWidget {
   final UserProfile user;
-
   ProfileShowDetails({this.user});
 
   @override
@@ -21,7 +21,7 @@ class ProfileShowDetails extends StatelessWidget {
               actions: <Widget>[
                 IconButton(
                     onPressed: () async {
-                      //navigateBack(context);
+                      navigateToEditDetails(context, this.user);
                     },
                     icon: Icon(Icons.edit),
                 )
@@ -77,5 +77,5 @@ void navigateToEditDetails(context, UserProfile user) {
   Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => ProfileShowDetails(user: user)));
+          builder: (context) => ProfileEdit(user: user)));
 }
