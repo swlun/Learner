@@ -29,7 +29,7 @@ class _ScreenState extends State<DefaultScreen> {
     return loading
         ? Loading()
         : Scaffold(
-          backgroundColor: Colors.blue[100],
+            backgroundColor: Colors.blue[100],
             appBar: AppBar(
               title: Text('Learner'),
               elevation: 0.0,
