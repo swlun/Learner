@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:learner/models/user_profile.dart';
+import 'package:learner/models/userProfile.dart';
 import 'package:learner/shared/loading.dart';
 import 'package:path/path.dart';
 
@@ -21,7 +21,7 @@ class _ProfileEditState extends State<ProfileEdit> {
   Widget build(BuildContext context) {
     Future getImage() async {
       var image = await ImagePicker.pickImage(source: ImageSource.gallery);
- 
+
       setState(() {
         _image = image;
         print('Image Path: $_image');
@@ -47,13 +47,20 @@ class _ProfileEditState extends State<ProfileEdit> {
             child: Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
-              leading: IconButton(
-                  icon: Icon(Icons.arrow_left),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  }),
-              title: Text('Edit Profile'),
-            ),
+                leading: IconButton(
+                    icon: Icon(Icons.clear),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    }),
+                title: Text('Edit Profile'),
+                actions: <Widget>[
+                  FlatButton.icon(
+                      onPressed: () {
+                        uploadPic(context);
+                      },
+                      icon: Icon(Icons.save),
+                      label: Text('Save')),
+                ]),
             body: Builder(
               builder: (context) => Container(
                 child: Column(
@@ -121,7 +128,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                 ),
                                 Align(
                                   alignment: Alignment.centerLeft,
-                                  child: Text('Michelle James',
+                                  child: Text('${widget.user.name}',
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 20.0,
@@ -162,7 +169,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                 ),
                                 Align(
                                   alignment: Alignment.centerLeft,
-                                  child: Text('1st April, 2000',
+                                  child: Text('${widget.user.birthday}',
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 20.0,
@@ -203,7 +210,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                 ),
                                 Align(
                                   alignment: Alignment.centerLeft,
-                                  child: Text('Paris, France',
+                                  child: Text('${widget.user.location}',
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 20.0,
@@ -224,63 +231,14 @@ class _ProfileEditState extends State<ProfileEdit> {
                         ),
                       ],
                     ),
-                    Container(
-                      margin: EdgeInsets.all(20.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Text('Email',
-                              style: TextStyle(
-                                  color: Colors.blueGrey, fontSize: 18.0)),
-                          SizedBox(width: 20.0),
-                          Text('michelle123@gmail.com',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold)),
-                        ],
-                      ),
-                    ),
                     SizedBox(
                       height: 20.0,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        RaisedButton(
-                          color: Color(0xff476cfb),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          elevation: 4.0,
-                          splashColor: Colors.blueGrey,
-                          child: Text(
-                            'Cancel',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 16.0),
-                          ),
-                        ),
-                        RaisedButton(
-                          color: Color(0xff476cfb),
-                          onPressed: () {
-                            uploadPic(context);
-                          },
-                          elevation: 4.0,
-                          splashColor: Colors.blueGrey,
-                          child: Text(
-                            'Submit',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 16.0),
-                          ),
-                        ),
-                      ],
-                    )
                   ],
                 ),
               ),
             ),
-          )
-        );
+          ));
   }
 }
 

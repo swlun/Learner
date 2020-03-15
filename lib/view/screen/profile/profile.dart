@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learner/models/user.dart';
-import 'package:learner/models/user_profile.dart';
+import 'package:learner/models/userProfile.dart';
 import 'package:learner/services/database.dart';
 import 'package:learner/shared/loading.dart';
 import 'package:learner/view/screen/profile/profileShowDetail.dart';

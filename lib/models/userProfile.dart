@@ -8,7 +8,8 @@ class UserProfile {
   final bool student;
   final bool teacher;
   final String joinedIn;
+  final String birthday;
 
-  UserProfile({this.name, this.age, this.location, this.contactNumber, this.occupation, this.description, this.student, this.teacher, this.joinedIn});
+  UserProfile({this.name, this.age, this.location, this.contactNumber, this.occupation, this.description, this.student, this.teacher, this.joinedIn, this.birthday});
 }  
   
