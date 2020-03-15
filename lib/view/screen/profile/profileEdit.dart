@@ -79,18 +79,22 @@ class _ProfileEditState extends State<ProfileEdit> {
                             backgroundColor: Color(0xff476cfb),
                             child: ClipOval(
                               child: new SizedBox(
-                                width: 180.0,
-                                height: 180.0,
-                                child: (_image != null)
-                                    ? Image.file(
-                                        _image,
-                                        fit: BoxFit.fill,
-                                      )
-                                    : Image.network(
-                                        "https://images.unsplash.com/photo-1502164980785-f8aa41d53611?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-                                        fit: BoxFit.fill,
-                                      ),
-                              ),
+                                  width: 180.0,
+                                  height: 180.0,
+                                  child: (_image != null)
+                                      ? Image.file(
+                                          _image,
+                                          fit: BoxFit.fill,
+                                        )
+                                      : Image(
+                                          image: new AssetImage("assets/images/profile_background.jpeg"),
+                                          fit: BoxFit.fill,
+                                        )
+                                  // : Image.network(
+                                  //     "https://images.unsplash.com/photo-1502164980785-f8aa41d53611?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+                                  //     fit: BoxFit.fill,
+                                  //   ),
+                                  ),
                             ),
                           ),
                         ),

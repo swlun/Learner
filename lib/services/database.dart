@@ -68,6 +68,7 @@ class DatabaseService {
     return UserProfile(
       name: profile.data['name'] ?? '',
       age: profile.data['age'] ?? 0,
+      birthday: profile.data['birthday'] ?? '',
       location: profile.data['location'] ?? '',
       contactNumber: profile.data['contactNumber'] ?? '',
       occupation: profile.data['occupation'] ?? '',
