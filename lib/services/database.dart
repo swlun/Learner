@@ -14,16 +14,19 @@ class DatabaseService {
   final FirebaseStorage storage = FirebaseStorage(storageBucket: 'gs://mal-db.appspot.com');
 
   //register with email and password
-  Future updateUserData(String name, int age, String location, String contactNumber, String occupation, String description, bool student, bool teacher) async {
-    return await usersCollection.document(uid).setData({
+  Future updateUserData(String name, int age, String location, String contactNumber, String occupation, String description, bool student, bool teacher, String birthday, String joinedIn, String userImage) async {
+    return await usersCollection.document(uid).setData({ 
       'name': name,
       'age': age,
+      'birthday': birthday,
       'location': location,
       'contactNumber': contactNumber,
       'occupation': occupation,
       'description': description,
       'student': student,
-      'teacher': teacher
+      'teacher': teacher,
+      'joinedIn': joinedIn,
+      'userImage': userImage,
     });
   }
 
@@ -66,6 +69,7 @@ class DatabaseService {
     final profile = await usersCollection.document(this.uid).get();
 
     return UserProfile(
+      id: this.uid,
       name: profile.data['name'] ?? '',
       age: profile.data['age'] ?? 0,
       birthday: profile.data['birthday'] ?? '',
@@ -76,6 +80,7 @@ class DatabaseService {
       student: profile.data['student'] ?? '',
       teacher: profile.data['teacher'] ?? '',
       joinedIn: profile.data['joinedIn'] ?? '',
+      userImage: profile.data['userImage'] ?? '',
     );
   }
 }

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:learner/models/userProfile.dart';
 import 'package:learner/shared/loading.dart';
-import 'package:path/path.dart';
 
 class ProfileEdit extends StatefulWidget {
   final UserProfile user;
@@ -29,7 +28,7 @@ class _ProfileEditState extends State<ProfileEdit> {
     }
 
     Future uploadPic(BuildContext context) async {
-      String fileName = basename(_image.path);
+      String fileName = 'userImage_${widget.user.id}';
       StorageReference firebaseStorageRef =
           FirebaseStorage.instance.ref().child(fileName);
       StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);

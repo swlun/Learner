@@ -49,7 +49,7 @@ class AuthService {
 
       //cfreate a new document for the user with uid
       await DatabaseService(uid: user.uid)
-          .updateUserData('', 0, '', '', '', '', false, false);
+          .updateUserData('', 0, '', '', '', '', false, false, '', '', '');
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e);
