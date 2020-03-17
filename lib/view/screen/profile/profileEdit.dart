@@ -3,6 +3,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:learner/models/userProfile.dart';
+import 'package:learner/services/database.dart';
 import 'package:learner/shared/loading.dart';
 
 class ProfileEdit extends StatefulWidget {
@@ -36,6 +37,8 @@ class _ProfileEditState extends State<ProfileEdit> {
       var storageUrl = await taskSnapshot.ref.getDownloadURL();
       String url = storageUrl.toString();
       print(url);
+
+      DatabaseService().editUserProfile('test', '01/01/2001', 'Kuala Lumpur, Malaysia', url);
       // setState(() {
       //   print("Profile Picture uploaded");
       //   Scaffold.of(context)

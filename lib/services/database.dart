@@ -30,6 +30,17 @@ class DatabaseService {
     });
   }
 
+  //update user profile in profileEdit
+  Future editUserProfile(String name,String birthday, String location, String userImage) async {
+    print('this uid: ' + this.uid);
+    return await usersCollection.document(this.uid).setData({ 
+      'name': name,
+      'birthday': birthday,
+      'location': location,
+      'userImage': userImage,
+    });
+  }
+
   //add new activities 
   Future updateActivitiesList(String subject, String area, String date, String description, String location, String time, String userId, List<String> tag) async {
     return await usersCollection.document(subject).collection('area').add({
