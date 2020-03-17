@@ -34,11 +34,14 @@ class _ProfileEditState extends State<ProfileEdit> {
           FirebaseStorage.instance.ref().child(fileName);
       StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
       StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-      setState(() {
-        print("Profile Picture uploaded");
-        Scaffold.of(context)
-            .showSnackBar(SnackBar(content: Text('Profile Picture Uploaded')));
-      });
+      var storageUrl = await taskSnapshot.ref.getDownloadURL();
+      String url = storageUrl.toString();
+      print(url);
+      // setState(() {
+      //   print("Profile Picture uploaded");
+      //   Scaffold.of(context)
+      //       .showSnackBar(SnackBar(content: Text('Profile Picture Uploaded')));
+      // });
     }
 
     return widget.user == null
@@ -57,6 +60,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                   FlatButton.icon(
                       onPressed: () {
                         uploadPic(context);
+                        Navigator.pop(context);
                       },
                       icon: Icon(Icons.save),
                       label: Text('Save')),
