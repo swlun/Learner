@@ -84,13 +84,16 @@ class _ProfileEditState extends State<ProfileEdit> {
                               child: new SizedBox(
                                   width: 180.0,
                                   height: 180.0,
-                                  child: (_image != null)
-                                      ? Image.file(
-                                          _image,
-                                          fit: BoxFit.fill,
-                                        )
-                                      : Image(
+                                  child: (_image == null)
+                                      ? ((widget.user.userImage == '') ? Image(
                                           image: new AssetImage("assets/images/profile_background.jpeg"),
+                                          fit: BoxFit.fill,
+                                        ) : Image.network(
+                                          widget.user.userImage,
+                                          fit: BoxFit.fill,
+                                        ))
+                                      : Image.file(
+                                          _image,
                                           fit: BoxFit.fill,
                                         )
                                   // : Image.network(
