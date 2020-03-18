@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:learner/models/userProfile.dart';
 
 class DatabaseService {
@@ -10,8 +9,6 @@ class DatabaseService {
   //collection reference
   final CollectionReference usersCollection = Firestore.instance.collection('Users');
   final CollectionReference activitiesListCollection = Firestore.instance.collection('ActivitiesList');
-
-  final FirebaseStorage storage = FirebaseStorage(storageBucket: 'gs://mal-db.appspot.com');
 
   //register with email and password
   Future updateUserData(String name, int age, String location, String contactNumber, String occupation, String description, bool student, bool teacher, String birthday, String joinedIn, String userImage) async {
@@ -32,8 +29,7 @@ class DatabaseService {
 
   //update user profile in profileEdit
   Future editUserProfile(String name,String birthday, String location, String userImage) async {
-    print('this uid: ' + this.uid);
-    return await usersCollection.document(this.uid).setData({ 
+    return await usersCollection.document(uid).updateData({ 
       'name': name,
       'birthday': birthday,
       'location': location,

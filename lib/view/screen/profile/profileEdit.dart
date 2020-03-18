@@ -38,7 +38,7 @@ class _ProfileEditState extends State<ProfileEdit> {
       String url = storageUrl.toString();
       print(url);
 
-      DatabaseService().editUserProfile('test', '01/01/2001', 'Kuala Lumpur, Malaysia', url);
+      DatabaseService(uid: widget.user.id).editUserProfile('test', '01/01/2001', 'Kuala Lumpur, Malaysias', url);
       // setState(() {
       //   print("Profile Picture uploaded");
       //   Scaffold.of(context)
@@ -82,7 +82,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                           alignment: Alignment.center,
                           child: CircleAvatar(
                             radius: 100,
-                            backgroundColor: Color(0xff476cfb),
+                            backgroundColor: Colors.blueAccent,
                             child: ClipOval(
                               child: new SizedBox(
                                   width: 180.0,
