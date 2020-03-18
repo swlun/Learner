@@ -38,7 +38,7 @@ class _ProfileEditState extends State<ProfileEdit> {
       String url = storageUrl.toString();
       print(url);
 
-      DatabaseService(uid: widget.user.id).editUserProfile('test', '01/01/2001', 'Kuala Lumpur, Malaysias', url);
+      DatabaseService(uid: widget.user.id).editUserProfile('test', '01/01/2001', 'Kuala Lumpur, Malaysia', url);
       // setState(() {
       //   print("Profile Picture uploaded");
       //   Scaffold.of(context)
