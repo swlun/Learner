@@ -10,7 +10,6 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    //final userProfile = Provider.of<UserProfile>(context);
 
     return FutureProvider<UserProfile>.value(
       value: DatabaseService(uid: user.uid).userProfile,
@@ -24,7 +23,7 @@ class Profile extends StatelessWidget {
                     leading: CircleAvatar(
                       radius: 25.0,
                       backgroundColor: Colors.blue,
-                      //backgroundImage: AssetImage('assets/images/profile_background'),
+                      backgroundImage: NetworkImage(myProfile.userImage),
                     ),
                     title: Text(myProfile.name),
                     subtitle: InkWell(
@@ -33,7 +32,7 @@ class Profile extends StatelessWidget {
                         style: TextStyle(color: Colors.pinkAccent),
                       ),
                       onTap: () {
-                        navigateToProfileShowDetail(context, myProfile);
+                        navigateToProfileShowDetail(context);
                       },
                     ),
                     trailing: Icon(Icons.person_outline),
@@ -61,10 +60,10 @@ class Profile extends StatelessWidget {
     );
   }
 
-  void navigateToProfileShowDetail(context, UserProfile user) {
+  void navigateToProfileShowDetail(context) {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => ProfileShowDetails(user: user)));
+            builder: (context) => ProfileShowDetails()));
   }
 }
