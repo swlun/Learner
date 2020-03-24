@@ -41,22 +41,24 @@ class _SignInState extends State<SignIn> {
               TextFormField(
                   decoration: textInputDecoration.copyWith(hintText: 'Email'),
                   validator: (val) => val.isEmpty ? 'Enter an email' : null,
-                  onChanged: (val) {
-                    setState(() => email = val);
+                  onSaved: (val) {
+                    email = val;
                   }),
               SizedBox(height: 20.0),
               TextFormField(
                   decoration: textInputDecoration.copyWith(hintText: 'Password'),
                   validator: (val) => val.isEmpty ? 'Enter a password' : null,
                   obscureText: true,
-                  onChanged: (val) {
-                    setState(() => password = val);
+                  onSaved: (val) {
+                    password = val;
                   }),
               SizedBox(height: 20.0),
               RaisedButton(
                   onPressed: () async {
                     if (_formKey.currentState.validate()) {
+                      _formKey.currentState.save();
                       setState(() => loading = true);
+                      
                       dynamic result = await _auth.signInWithEmailAndPassword(email.trim(), password);
                       if(result == null) {
                         setState(() {

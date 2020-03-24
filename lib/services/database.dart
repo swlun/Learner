@@ -28,12 +28,13 @@ class DatabaseService {
   }
 
   //update user profile in profileEdit
-  Future editUserProfile(String name,String birthday, String location, String userImage) async {
+  Future editUserProfile(String name,String birthday, String location, String occupation, String userImage) async {
     return await usersCollection.document(uid).updateData({ 
-      'name': name,
-      'birthday': birthday,
-      'location': location,
-      'userImage': userImage,
+      'name': name ?? '',
+      'birthday': birthday ?? '',
+      'location': location ?? '',
+      'occupation': occupation ?? '',
+      'userImage': userImage ?? '',
     });
   }
 

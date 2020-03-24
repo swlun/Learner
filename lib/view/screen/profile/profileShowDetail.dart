@@ -86,11 +86,11 @@ class ProfileShowDetails extends StatelessWidget {
     return userJoinIn.substring(userJoinIn.length - 4, userJoinIn.length);
   }
 
-  void navigateToEditDetails(context, UserProfile user) {
+  void navigateToEditDetails(context, UserProfile myProfile) {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => ProfileEdit(user: user))
+            builder: (context) => ProfileEdit(userProfile: myProfile))
     );
   }
 }
