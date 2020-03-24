@@ -29,7 +29,7 @@ class Profile extends StatelessWidget {
                     subtitle: InkWell(
                       child: Text(
                         'View Profile',
-                        style: TextStyle(color: Colors.pinkAccent),
+                        style: TextStyle(color: Colors.green[600]),
                       ),
                       onTap: () {
                         navigateToProfileShowDetail(context);

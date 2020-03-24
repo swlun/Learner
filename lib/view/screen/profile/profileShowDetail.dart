@@ -23,10 +23,10 @@ class ProfileShowDetails extends StatelessWidget {
             ? Loading()
             : Material(
             child: Scaffold(
-            backgroundColor: Colors.white,
+            //backgroundColor: Colors.white,
             appBar: AppBar(
               iconTheme: IconThemeData(color: Colors.grey),
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.transparent,
               elevation: 0.0,
               actions: <Widget>[
                 IconButton(

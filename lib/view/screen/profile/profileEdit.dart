@@ -25,7 +25,7 @@ class _ProfileEditState extends State<ProfileEdit> {
         ? Loading()
         : Material(
             child: Scaffold(
-                backgroundColor: Colors.white,
+                //backgroundColor: Colors.white,
                 appBar: AppBar(
                     leading: IconButton(
                         icon: Icon(Icons.clear),

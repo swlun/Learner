@@ -29,9 +29,10 @@ class _ScreenState extends State<DefaultScreen> {
     return loading
         ? Loading()
         : Scaffold(
-            backgroundColor: Colors.blue[100],
+            //backgroundColor: Colors.blue[100],
             appBar: AppBar(
-              title: Text('Learner'),
+              backgroundColor: Colors.transparent,
+              title: Text('Learner', style: TextStyle(color: Colors.blueGrey),),
               elevation: 0.0,
               actions: <Widget>[
                 FlatButton.icon(
