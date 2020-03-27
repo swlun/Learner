@@ -1,86 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:learner/models/activities.dart';
+import 'package:learner/services/database.dart';
+import 'package:learner/shared/loading.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
-  final String test;
-
-  Home(this.test);
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-      height: 220,
-      width: double.maxFinite,
-      child: Card(
-        elevation: 5,
-        child: Padding(
-        padding: EdgeInsets.all(7),
-        child: Stack(children: <Widget>[
-          Align(
-            alignment: Alignment.centerRight,
-            child: Stack(
-              children: <Widget>[
-                Padding(
-                    padding: const EdgeInsets.only(left: 10, top: 5),
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            cardListIcon(),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            cardListNameSymbol(),
-                            Spacer(),
-                            cardListChange(),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            changeIcon(),
-                            SizedBox(
-                              width: 20,
-                            )
-                          ],
-                        ),
-                        Row(
-                          children: <Widget>[cardListAmount()],
-                        )
-                      ],
-                    ))
-                ],
-            ),
-          )
-        ]),
-      ),
-      ),
-    );
-  }  
- }
+    return StreamProvider<List<Activities>>.value(
+        value: DatabaseService().activitiesList,
+        child: Consumer<List<Activities>>(
+            builder: (context, activitiesList, child) {
+          return activitiesList == null
+              ? Loading()
+              : Container(
+                  padding: EdgeInsets.zero,
+                  width: double.maxFinite,
+                  child: ListView.separated(
+                      itemCount: activitiesList.length,
+                      separatorBuilder: (BuildContext context, int index) =>
+                          const Divider(),
+                      itemBuilder: (BuildContext context, int index) {
+                        return Card(
+                            elevation: 3,
+                            child: Padding(
+                                padding: EdgeInsets.only(left: 5, right: 5),
+                                child: ListTile(
+                                    title:
+                                        Text(activitiesList[index].description),
+                                    trailing: cardListPrice(
+                                        activitiesList[index].price),
+                                    subtitle: Column(children: <Widget>[
+                                      // Row(
+                                      //   children: <Widget>[
+                                          //     cardListTitleAndLocation(
+                                          //         activitiesList[index].description,
+                                          //         activitiesList[index].location),
+                                          //     Spacer(),
 
-Widget cardListIcon() {
-  return Padding(
-    padding: const EdgeInsets.only(left: 15.0),
-    child: Align(
-        alignment: Alignment.centerLeft,
-        child: Icon(
-          Icons.card_giftcard,
-          color: Colors.amber,
-          size: 40,
-        )),
-  );
+                                          //   ],
+                                          // ),
+                                          //Divider(),
+                                          cardListAmount(activitiesList[index]
+                                              .tag
+                                              .join(', ')),
+                                        // ],
+                                      // ),
+                                    ]))));
+                      }),
+                );
+        }));
+  }
 }
 
-Widget cardListNameSymbol() {
+Widget cardListTitleAndLocation(String description, String location) {
   return Align(
     alignment: Alignment.centerLeft,
     child: RichText(
       text: TextSpan(
-        text: 'Tester',
+        text: description,
         style: TextStyle(
             fontWeight: FontWeight.bold, color: Colors.black, fontSize: 20),
         children: <TextSpan>[
           TextSpan(
-              text: '\ntst',
+              text: '\n$location',
               style: TextStyle(
                   color: Colors.grey,
                   fontSize: 15,
@@ -91,61 +74,51 @@ Widget cardListNameSymbol() {
   );
 }
 
-Widget cardListChange() {
+Widget cardListPrice(String price) {
   return Align(
     alignment: Alignment.topRight,
     child: RichText(
       text: TextSpan(
-        text: '+3.67%',
+        text: 'RM$price',
         style: TextStyle(
             fontWeight: FontWeight.bold, color: Colors.green, fontSize: 20),
-        children: <TextSpan>[
-          TextSpan(
-              text: '\n+202.835',
-              style: TextStyle(
-                  color: Colors.green,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold)),
-        ],
+        // children: <TextSpan>[
+        //   TextSpan(
+        //       text: '\n+202.835',
+        //       style: TextStyle(
+        //           color: Colors.green,
+        //           fontSize: 15,
+        //           fontWeight: FontWeight.bold)),
+        // ],
       ),
     ),
   );
 }
 
-Widget changeIcon() {
-  return Align(
-      alignment: Alignment.topRight,
-      child: Icon(
-        Icons.arrow_upward,
-        color: Colors.green,
-        size: 30,
-      ));
-}
-
-Widget cardListAmount() {
+Widget cardListAmount(String tag) {
   return Align(
     alignment: Alignment.centerLeft,
     child: Padding(
-      padding: const EdgeInsets.only(left: 20.0),
+      padding: const EdgeInsets.all(0),
       child: Row(
         children: <Widget>[
           RichText(
             textAlign: TextAlign.left,
             text: TextSpan(
-              text: '\n\$12.279',
+              text: tag,
               style: TextStyle(
                 color: Colors.grey,
-                fontSize: 35,
+                fontSize: 15,
               ),
-              children: <TextSpan>[
-                TextSpan(
-                    text: '\n0.1349',
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontStyle: FontStyle.italic,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold)),
-              ],
+              // children: <TextSpan>[
+              //   TextSpan(
+              //       text: '\n0.1349',
+              //       style: TextStyle(
+              //           color: Colors.grey,
+              //           fontStyle: FontStyle.italic,
+              //           fontSize: 20,
+              //           fontWeight: FontWeight.bold)),
+              // ],
             ),
           ),
         ],

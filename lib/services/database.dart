@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:learner/models/activities.dart';
 import 'package:learner/models/userProfile.dart';
 
 class DatabaseService {
@@ -40,7 +41,7 @@ class DatabaseService {
 
   //add new activities 
   Future updateActivitiesList(String subject, String area, String date, String description, String location, String time, String userId, List<String> tag) async {
-    return await usersCollection.document(subject).collection('area').add({
+    return await usersCollection.document(subject).collection(area).add({
       'date': date,
       'description': description,
       'location': location,
@@ -51,24 +52,22 @@ class DatabaseService {
   }
 
   //get activities stream
-  Stream<List<UserProfile>> get users {
-    return usersCollection.snapshots()
-      .map(_userListFromSnapshot);
+  Stream<List<Activities>> get activitiesList {
+    return activitiesListCollection.document('English').collection('kl').snapshots()
+    .map(_activitiesListFromSnapshot);
   }
 
-  //get user list from snapshot
-  List<UserProfile> _userListFromSnapshot(QuerySnapshot snapshot) {
+  //get activities list from snapshot
+  List<Activities> _activitiesListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
-      return UserProfile(
-        name: doc.data['name'] ?? '',
-        age: doc.data['age'] ?? 0,
-        location: doc.data['location'] ?? '',
-        birthday: doc.data['birthday'] ?? '',
-        contactNumber: doc.data['contactNumber'] ?? '',
-        occupation: doc.data['occupation'] ?? '',
-        description: doc.data['description'] ?? '',
-        student: doc.data['student'] ?? '',
-        teacher: doc.data['teacher'] ?? '',
+      return Activities(
+        date: doc.data['date'],
+        description: doc.data['description'],
+        location: doc.data['location'],
+        time: doc.data['time'],
+        tag: doc.data['tag'].cast<String>(),
+        userId: doc.data['userId'],
+        price: doc.data['price'],
       );
     }).toList();
   }

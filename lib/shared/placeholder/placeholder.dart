@@ -14,12 +14,12 @@ class PlaceHolder extends StatelessWidget {
  @override
  Widget build(BuildContext context) {
     switch(tab) {
-      case 0: return Home('Home');
+      case 0: return Home();
       case 1: return Favourite('favourite');
       case 2: return Schedule('schedule');
       case 3: return Chat('chat');
       case 4: return Profile();
-      default: return Home('Default');
+      default: return Home();
     }
   }
 }
