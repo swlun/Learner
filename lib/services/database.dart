@@ -40,7 +40,7 @@ class DatabaseService {
   }
 
   //add new activities 
-  Future updateActivitiesList(String subject, String area, String date, String description, String location, String time, String userId, List<String> tag) async {
+  Future addActivity(String subject, String area, String date, String description, String location, String time, String userId, List<String> tag) async {
     return await usersCollection.document(subject).collection(area).add({
       'date': date,
       'description': description,
