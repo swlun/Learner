@@ -40,7 +40,7 @@ class Home extends StatelessWidget {
                                 child: Align(
                                     alignment: Alignment.centerLeft,
                                     child:
-                                        Text(activitiesList[index].tag.join(','))),
+                                        Text(activitiesList[index].tag.join(', '))),
                               ),
                             ],
                           ),

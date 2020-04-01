@@ -14,8 +14,12 @@ class Schedule extends StatelessWidget {
       FlatButton.icon(
           onPressed: () {
             createAddActivityDialog(context).then((val) {
-              SnackBar hint = SnackBar(content: Text('New Event Added'),);
-              Scaffold.of(context).showSnackBar(hint);
+              if( val != null) {
+                if(val) {
+                  SnackBar hint = SnackBar(content: Text('New Event Added'),);
+                  Scaffold.of(context).showSnackBar(hint);
+                }
+              }
             });
           },
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
@@ -42,8 +46,7 @@ class Schedule extends StatelessWidget {
                 child: Text('Add'),
                 color: Colors.green,
                 onPressed: () {
-                  print('clicked');
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pop(true);
                 },
               )
             ],
