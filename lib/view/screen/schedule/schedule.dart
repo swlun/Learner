@@ -3,6 +3,7 @@ import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:learner/shared/constants.dart';
+import 'package:learner/view/screen/schedule/addSchedule.dart';
 
 class Schedule extends StatelessWidget {
   final String test;
@@ -17,7 +18,11 @@ class Schedule extends StatelessWidget {
       Spacer(),
       FlatButton.icon(
           onPressed: () {
-            createAddActivityDialog(context).then((val) {
+            return showDialog(
+                context: context,
+                builder: (context) {
+                  return AddSchedule(context: context);
+                }).then((val) {
               if (val != null) {
                 if (val) {
                   SnackBar hint = SnackBar(
@@ -68,7 +73,7 @@ class Schedule extends StatelessWidget {
                         onSaved: (input) => _description = input,
                       ),
                       ListTile(
-                        dense:true,
+                        dense: true,
                         contentPadding: EdgeInsets.only(left: 0.0, right: 0.0),
                         subtitle: DropdownButtonFormField<String>(
                           decoration: InputDecoration(
@@ -109,7 +114,7 @@ class Schedule extends StatelessWidget {
                         onSaved: (input) => _price = input,
                       ),
                       ListTile(
-                        dense:true,
+                        dense: true,
                         contentPadding: EdgeInsets.only(left: 0.0, right: 0.0),
                         subtitle: DateTimeField(
                           decoration: InputDecoration(
@@ -129,24 +134,24 @@ class Schedule extends StatelessWidget {
                         ),
                       ),
                       ListTile(
-                        dense:true,
+                        dense: true,
                         contentPadding: EdgeInsets.only(left: 0.0, right: 0.0),
                         subtitle: DateTimeField(
-                        decoration: InputDecoration(
+                          decoration: InputDecoration(
                             isDense: true,
                             hasFloatingPlaceholder: true,
                             labelText: "Time",
+                          ),
+                          format: timeFormat,
+                          onShowPicker: (context, currentValue) async {
+                            final TimeOfDay time = await showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay.fromDateTime(
+                                  currentValue ?? DateTime.now()),
+                            );
+                            return DateTimeField.convert(time);
+                          },
                         ),
-                        format: timeFormat,
-                        onShowPicker: (context, currentValue) async {
-                          final TimeOfDay time = await showTimePicker(
-                            context: context,
-                            initialTime: TimeOfDay.fromDateTime(
-                                currentValue ?? DateTime.now()),
-                          );
-                          return DateTimeField.convert(time);
-                        },
-                      ),
                       ),
                       TextFormField(
                         decoration: const InputDecoration(
