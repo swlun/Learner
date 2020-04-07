@@ -1,9 +1,8 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:learner/shared/constants.dart';
-import 'package:learner/view/screen/schedule/addSchedule.dart';
+
+import 'addSchedule.dart';
 
 class Schedule extends StatelessWidget {
   final String test;

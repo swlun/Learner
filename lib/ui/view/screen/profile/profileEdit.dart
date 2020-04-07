@@ -2,9 +2,9 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:learner/models/userProfile.dart';
-import 'package:learner/services/database.dart';
-import 'package:learner/shared/loading.dart';
+import 'package:learner/core/models/userProfile.dart';
+import 'package:learner/core/services/database.dart';
+import 'package:learner/ui/widgets/loading.dart';
 
 class ProfileEdit extends StatefulWidget {
   final UserProfile userProfile;

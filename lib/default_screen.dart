@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:learner/services/auth.dart';
-import 'package:learner/shared/loading.dart';
-import './placeholder.dart';
+import 'core/services/auth.dart';
+import 'placeholder.dart';
+import 'ui/widgets/loading.dart';
 
 class DefaultScreen extends StatefulWidget {
   @override

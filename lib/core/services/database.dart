@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:learner/models/activities.dart';
-import 'package:learner/models/userProfile.dart';
+import 'package:learner/core/models/activities.dart';
+import 'package:learner/core/models/userProfile.dart';
 
 class DatabaseService {
 

@@ -1,18 +1,18 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:learner/services/auth.dart';
-import 'package:learner/shared/constants.dart';
-import 'package:learner/shared/loading.dart';
+import 'package:learner/core/services/auth.dart';
+import 'package:learner/ui/widgets/constants.dart';
+import 'package:learner/ui/widgets/loading.dart';
 
-class SignIn extends StatefulWidget {
+class Register extends StatefulWidget {
   final Function toggleView;
-  SignIn({this.toggleView});
+  Register({this.toggleView});
 
   @override
-  _SignInState createState() => _SignInState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
+class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
@@ -29,7 +29,7 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(
         //backgroundColor: Colors.blue[300],
         elevation: 0.0,
-        title: Text('Sign in to Learner'),
+        title: Text('Sign up to Learner'),
       ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
@@ -40,59 +40,57 @@ class _SignInState extends State<SignIn> {
               SizedBox(height: 20.0),
               TextFormField(
                   decoration: textInputDecoration.copyWith(hintText: 'Email'),
-                  validator: (val) => val.isEmpty ? 'Enter an email' : null,
-                  onSaved: (val) {
-                    email = val;
+                  validator: (val) => val.isEmpty ? 'Enter a email' : null,
+                  onChanged: (val) {
+                    setState(() => email = val);
                   }),
               SizedBox(height: 20.0),
               TextFormField(
                   decoration: textInputDecoration.copyWith(hintText: 'Password'),
                   validator: (val) => val.isEmpty ? 'Enter a password' : null,
                   obscureText: true,
-                  onSaved: (val) {
-                    password = val;
+                  onChanged: (val) {
+                    setState(() => password = val);
                   }),
               SizedBox(height: 20.0),
               RaisedButton(
                   onPressed: () async {
                     if (_formKey.currentState.validate()) {
-                      _formKey.currentState.save();
                       setState(() => loading = true);
-                      
-                      dynamic result = await _auth.signInWithEmailAndPassword(email.trim(), password);
+                      dynamic result = await _auth.registerWithEmailAndPassword(email.trim(), password);
                       if(result == null) {
                         setState(() {
-                           error = 'Please log in with a valid email';
-                           loading = false;
+                          error = 'Please supply a valid email';
+                          loading = true;
                         });
                       }
-                  }
+                    }
                   },
                   color: Colors.lightBlue,
                   child: Text(
-                    'Sign in',
+                    'Register',
                     style: TextStyle(color: Colors.white),
-                  )),
+                  ),
+              ),
               SizedBox(height: 20.0),
               Text(
                 error,
                 style: TextStyle(color: Colors.red, fontSize: 14.0),
               ),
               RichText(
-                  text: TextSpan(
-                      text: 'New to Learner? ',
-                      style: TextStyle(fontSize: 15, color: Colors.black),
-                      children: <TextSpan>[
-                    TextSpan(
-                        text: 'Sign Up',
-                        style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            fontWeight: FontWeight.bold),
-                        recognizer: new TapGestureRecognizer()
-                          ..onTap = () {
-                            widget.toggleView();
-                          })
-                  ]))
+               text: TextSpan(
+                 text:'Already have an account? ',
+                 style: TextStyle(fontSize: 15, color: Colors.black),
+                 children: <TextSpan> [
+                   TextSpan(
+                     text: 'Log in',
+                     style: TextStyle(decoration: TextDecoration.underline, fontWeight: FontWeight.bold),
+                     recognizer: new TapGestureRecognizer()
+                     ..onTap = () { widget.toggleView();}
+                   )
+                 ]
+               )
+              )
             ],
           ),
         ),

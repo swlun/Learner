@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:learner/models/user.dart';
-import 'package:learner/models/userProfile.dart';
-import 'package:learner/services/database.dart';
-import 'package:learner/shared/loading.dart';
-import 'package:learner/view/screen/profile/profileEdit.dart';
+import 'package:learner/core/models/user.dart';
+import 'package:learner/core/models/userProfile.dart';
+import 'package:learner/core/services/database.dart';
+import 'package:learner/ui/widgets/loading.dart';
 import 'package:provider/provider.dart';
+
+import 'profileEdit.dart';
 
 class ProfileShowDetails extends StatelessWidget {
   

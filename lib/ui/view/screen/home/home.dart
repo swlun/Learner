@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:learner/models/activities.dart';
-import 'package:learner/services/database.dart';
-import 'package:learner/shared/loading.dart';
+import 'package:learner/core/models/activities.dart';
+import 'package:learner/core/services/database.dart';
+import 'package:learner/ui/widgets/loading.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
