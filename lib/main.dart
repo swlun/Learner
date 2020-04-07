@@ -2,17 +2,16 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:learner/wrapper.dart';
 import 'package:provider/provider.dart';
 
-import './wrapper.dart';
 import 'core/models/user.dart';
 import 'core/services/auth.dart';
 
 void main() {
   FlutterError.onError = (FlutterErrorDetails details) {
     FlutterError.dumpErrorToConsole(details);
-    if (kReleaseMode)
-      exit(1);
+    if (kReleaseMode) exit(1);
   };
   runApp(MyApp());
 }
@@ -23,8 +22,11 @@ class MyApp extends StatelessWidget {
     return StreamProvider<User>.value(
       value: AuthService().user,
       child: MaterialApp(
-        title: 'Learner',
         home: Wrapper(),
+        title: 'Learner',
+        theme: ThemeData(
+          primarySwatch: Colors.blueGrey,
+        ),
       ),
     );
   }
