@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:learner/core/crud/userProfileCRUD.dart';
 import 'package:learner/core/models/user.dart';
 import 'package:learner/core/models/userProfile.dart';
-import 'package:learner/core/services/database.dart';
 import 'package:learner/ui/widgets/loading.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +17,7 @@ class ProfileShowDetails extends StatelessWidget {
     final user = Provider.of<User>(context);
     
     return FutureProvider<UserProfile>.value(
-      value: DatabaseService(uid: user.uid).userProfile,
+      value: UserProfileCRUD(uid: user.uid).userProfile,
       child: Container(
           child: Consumer<UserProfile>(builder: (context, myProfile, child) {
           return myProfile == null

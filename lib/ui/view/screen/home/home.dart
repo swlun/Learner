@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:learner/core/crud/activitiesListCRUD.dart';
 import 'package:learner/core/models/activities.dart';
-import 'package:learner/core/services/database.dart';
 import 'package:learner/ui/widgets/loading.dart';
 import 'package:provider/provider.dart';
 
@@ -8,7 +8,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<List<Activities>>.value(
-      value: DatabaseService().activitiesList,
+      value: ActivitiesList().activitiesList,
       child:
           Consumer<List<Activities>>(builder: (context, activitiesList, child) {
         return activitiesList == null

@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:learner/core/crud/userProfileCRUD.dart';
 import 'package:learner/core/models/userProfile.dart';
-import 'package:learner/core/services/database.dart';
 import 'package:learner/ui/widgets/loading.dart';
 
 class ProfileEdit extends StatefulWidget {
@@ -182,7 +182,7 @@ class _ProfileEditState extends State<ProfileEdit> {
       _imageUrl = widget.userProfile.userImage;
     }
 
-    DatabaseService(uid: widget.userProfile.id)
+    UserProfileCRUD(uid: widget.userProfile.id)
         .editUserProfile(_name, _birthday, _location, _occupation, _imageUrl);
   }
 }
