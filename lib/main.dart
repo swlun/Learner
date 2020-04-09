@@ -1,7 +1,10 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:learner/core/crud/userProfileCRUD.dart';
+import 'package:learner/core/models/userProfile.dart';
 import 'package:learner/wrapper.dart';
 import 'package:provider/provider.dart';
 
@@ -19,15 +22,21 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<User>.value(
-      value: AuthService().user,
-      child: MaterialApp(
-        home: Wrapper(),
-        title: 'Learner',
-        theme: ThemeData(
-          primarySwatch: Colors.blueGrey,
-        ),
-      ),
-    );
+    return MultiProvider(
+        providers: [
+          StreamProvider<User>(
+            create: (_) => AuthService().user,
+            initialData: null,
+          ),
+          ListenableProxyProvider<User, UserProfileCRUD>(
+              update: (_, user, __) => UserProfileCRUD(uid: user.uid)),
+        ],
+        child: MaterialApp(
+          home: Wrapper(),
+          title: 'Learner',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+        ));
   }
 }

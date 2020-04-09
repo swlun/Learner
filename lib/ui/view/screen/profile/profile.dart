@@ -1,6 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:learner/core/crud/userProfileCRUD.dart';
-import 'package:learner/core/models/user.dart';
 import 'package:learner/core/models/userProfile.dart';
 import 'package:learner/ui/widgets/loading.dart';
 import 'package:provider/provider.dart';
@@ -10,13 +10,13 @@ import 'profileShowDetail.dart';
 class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
+    //final userProfileFuture = Provider.of<Stream<UserProfile>>(context);
+    final userProfileProvider = Provider.of<UserProfileCRUD>(context);
 
-    return FutureProvider<UserProfile>.value(
-      value: UserProfileCRUD(uid: user.uid).userProfile,
-      child: Container(
-          child: Consumer<UserProfile>(builder: (context, myProfile, child) {
-          return myProfile == null
+    return StreamBuilder(
+      stream: userProfileProvider.userProfileStream,
+      builder: (context, AsyncSnapshot<UserProfile> profile) {
+        return profile.data == null
             ? Loading()
             : Column(
                 children: <Widget>[
@@ -24,9 +24,9 @@ class Profile extends StatelessWidget {
                     leading: CircleAvatar(
                       radius: 25.0,
                       backgroundColor: Colors.blue,
-                      backgroundImage: NetworkImage(myProfile.userImage),
+                      backgroundImage: NetworkImage(profile.data.userImage),
                     ),
-                    title: Text(myProfile.name),
+                    title: Text('test'),
                     subtitle: InkWell(
                       child: Text(
                         'View Profile',
@@ -57,14 +57,12 @@ class Profile extends StatelessWidget {
                   )
                 ],
               );
-      })),
+      },
     );
   }
+}
 
-  void navigateToProfileShowDetail(context) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => ProfileShowDetails()));
-  }
+void navigateToProfileShowDetail(context) {
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => ProfileShowDetails()));
 }

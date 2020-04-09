@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:learner/core/crud/userProfileCRUD.dart';
 import 'package:learner/core/models/userProfile.dart';
 import 'package:learner/ui/widgets/loading.dart';
+import 'package:provider/provider.dart';
 
 class ProfileEdit extends StatefulWidget {
   final UserProfile userProfile;
@@ -21,6 +22,44 @@ class _ProfileEditState extends State<ProfileEdit> {
 
   @override
   Widget build(BuildContext context) {
+    final userProfileProvider = Provider.of<UserProfileCRUD>(context);
+
+    Future updateProfile(BuildContext context) async {
+      String fileName = 'userImage_${widget.userProfile.id}';
+      StorageReference firebaseStorageRef =
+          FirebaseStorage.instance.ref().child(fileName);
+
+      if (_image != null) {
+        StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
+        StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+        var storageUrl = await taskSnapshot.ref.getDownloadURL();
+        _imageUrl = storageUrl.toString();
+      } else {
+        _imageUrl = widget.userProfile.userImage;
+      }
+
+      userProfileProvider.editUserProfile(
+          _name, _birthday, _location, _occupation, _imageUrl);
+    }
+
+    Future<bool> saveForm() async {
+      if (_formKey.currentState.validate()) {
+        _formKey.currentState.save();
+        updateProfile(context);
+      }
+
+      return _formKey.currentState.validate();
+    }
+
+    Future getImage() async {
+      var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+      setState(() {
+        _image = image;
+        print('Image Path: $_image');
+      });
+    }
+
     return widget.userProfile == null
         ? Loading()
         : Material(
@@ -37,7 +76,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                       FlatButton.icon(
                           onPressed: () async {
                             var uploaded = await saveForm();
-                            if(uploaded) {
+                            if (uploaded) {
                               Navigator.pop(context);
                             }
                           },
@@ -107,14 +146,19 @@ class _ProfileEditState extends State<ProfileEdit> {
                                     height: 20.0,
                                   ),
                                   TextFormField(
-                                    initialValue: '${widget.userProfile.name}',
-                                    decoration: const InputDecoration(
-                                      labelText: 'Name',
-                                      hintText: 'Please insert your name',
-                                    ),
-                                    validator: (input) => input.isEmpty ? 'Name can not be empty' : null,
-                                    onSaved: (input) { _name = input; print('input: ' + _name);}
-                                  ),
+                                      initialValue:
+                                          '${widget.userProfile.name}',
+                                      decoration: const InputDecoration(
+                                        labelText: 'Name',
+                                        hintText: 'Please insert your name',
+                                      ),
+                                      validator: (input) => input.isEmpty
+                                          ? 'Name can not be empty'
+                                          : null,
+                                      onSaved: (input) {
+                                        _name = input;
+                                        print('input: ' + _name);
+                                      }),
                                   TextFormField(
                                     initialValue:
                                         '${widget.userProfile.birthday}',
@@ -149,48 +193,11 @@ class _ProfileEditState extends State<ProfileEdit> {
                         )))));
   }
 
-  Future<bool> saveForm() async {
-    if(_formKey.currentState.validate()) {
-      _formKey.currentState.save();
-      updateProfile(context);
-    }
-
-    return _formKey.currentState.validate();
+  String getJoinMonth(String userJoinIn) {
+    return userJoinIn.substring(0, userJoinIn.length - 4);
   }
 
-  Future getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      _image = image;
-      print('Image Path: $_image');
-    });
+  String getJoinYear(String userJoinIn) {
+    return userJoinIn.substring(userJoinIn.length - 4, userJoinIn.length);
   }
-
-  Future updateProfile(BuildContext context) async {
-    String fileName = 'userImage_${widget.userProfile.id}';
-    StorageReference firebaseStorageRef =
-        FirebaseStorage.instance.ref().child(fileName);
-
-    if (_image != null) {
-      StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
-      StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-      var storageUrl = await taskSnapshot.ref.getDownloadURL();
-      _imageUrl = storageUrl.toString();
-    }
-    else {
-      _imageUrl = widget.userProfile.userImage;
-    }
-
-    UserProfileCRUD(uid: widget.userProfile.id)
-        .editUserProfile(_name, _birthday, _location, _occupation, _imageUrl);
-  }
-}
-
-String getJoinMonth(String userJoinIn) {
-  return userJoinIn.substring(0, userJoinIn.length - 4);
-}
-
-String getJoinYear(String userJoinIn) {
-  return userJoinIn.substring(userJoinIn.length - 4, userJoinIn.length);
 }

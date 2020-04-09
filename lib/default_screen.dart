@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:learner/core/crud/userProfileCRUD.dart';
+import 'package:learner/core/models/userProfile.dart';
 import 'package:learner/ui/view/screen/chat/chat.dart';
 import 'package:learner/ui/view/screen/favourite/favourite.dart';
 import 'package:learner/ui/view/screen/profile/profile.dart';
 import 'package:learner/ui/view/screen/schedule/schedule.dart';
+import 'package:provider/provider.dart';
+import 'core/models/user.dart';
 import 'core/services/auth.dart';
 import 'ui/view/screen/home/home.dart';
 import 'ui/widgets/loading.dart';
@@ -39,55 +43,63 @@ class _ScreenState extends State<DefaultScreen> {
   final List<Widget> _pages = [
     Home(),
     Favourite('favourite'),
-    Schedule('schedule'),
+    Schedule(),
     Chat('chat'),
     Profile(),
   ];
 
   Widget build(BuildContext context) {
-    return loading
-        ? Loading()
-        : Scaffold(
-            //backgroundColor: Colors.blue[100],
-            appBar: AppBar(
-              backgroundColor: Colors.transparent,
-              title: Text(
-                'Learner',
-                style: TextStyle(color: Colors.blueGrey),
+    final user = Provider.of<User>(context);
+
+    return 
+    // MultiProvider(
+    //   providers: [
+    //     // StreamProvider<UserProfile>.value(value: UserProfileCRUD(uid: user.uid).userProfile),
+    //   ],
+    //   child: 
+    loading
+          ? Loading()
+          : Scaffold(
+              //backgroundColor: Colors.blue[100],
+              appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                title: Text(
+                  'Learner',
+                  style: TextStyle(color: Colors.blueGrey),
+                ),
+                elevation: 0.0,
+                actions: <Widget>[
+                  FlatButton.icon(
+                      onPressed: () async {
+                        setState(() => loading = true);
+                        await _auth.signOut();
+                        setState(() => loading = false);
+                      },
+                      icon: Icon(Icons.exit_to_app),
+                      label: Text('Logout'))
+                ],
               ),
-              elevation: 0.0,
-              actions: <Widget>[
-                FlatButton.icon(
-                    onPressed: () async {
-                      setState(() => loading = true);
-                      await _auth.signOut();
-                      setState(() => loading = false);
-                    },
-                    icon: Icon(Icons.exit_to_app),
-                    label: Text('Logout'))
-              ],
-            ),
-            body: SafeArea(
-              top: false,
-              child: Container(
-                child: _pages[_currentIndex],
+              body: SafeArea(
+                top: false,
+                child: Container(
+                  child: _pages[_currentIndex],
+                ),
               ),
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-              onTap: (int index) {
-                setState(() {
-                  _currentIndex = index;
-                });
-              },
-              currentIndex: _currentIndex,
-              type: BottomNavigationBarType.fixed,
-              items: allDestinations.map((PageNavigate item) {
-                return BottomNavigationBarItem(
-                    icon: Icon(item.icon),
-                    backgroundColor: Colors.grey[800],
-                    title: Text(item.title));
-              }).toList(),
-            ),
-          );
+              bottomNavigationBar: BottomNavigationBar(
+                onTap: (int index) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
+                currentIndex: _currentIndex,
+                type: BottomNavigationBarType.fixed,
+                items: allDestinations.map((PageNavigate item) {
+                  return BottomNavigationBarItem(
+                      icon: Icon(item.icon),
+                      backgroundColor: Colors.grey[800],
+                      title: Text(item.title));
+                }).toList(),
+              ),
+    );
   }
 }
