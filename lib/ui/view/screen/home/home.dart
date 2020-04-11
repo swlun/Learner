@@ -8,7 +8,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<List<Activities>>.value(
-      value: ActivitiesList().activitiesList,
+      value: ActivitiesListCRUD().activitiesList,
       child:
           Consumer<List<Activities>>(builder: (context, activitiesList, child) {
         return activitiesList == null

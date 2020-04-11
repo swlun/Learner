@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:learner/core/crud/activitiesListCRUD.dart';
 import 'package:learner/core/crud/userProfileCRUD.dart';
-import 'package:learner/core/models/userProfile.dart';
+import 'package:learner/core/crud/userActivitiesCRUD.dart';
 import 'package:learner/wrapper.dart';
 import 'package:provider/provider.dart';
 
@@ -30,6 +30,10 @@ class MyApp extends StatelessWidget {
           ),
           ListenableProxyProvider<User, UserProfileCRUD>(
               update: (_, user, __) => UserProfileCRUD(uid: user.uid)),
+          ListenableProxyProvider<User, UserActivitiesCRUD>(
+              update: (_, user, __) => UserActivitiesCRUD(uid: user.uid)),
+          ListenableProxyProvider<User, ActivitiesListCRUD>(
+              update: (_, user, __) => ActivitiesListCRUD(uid: user.uid)),
         ],
         child: MaterialApp(
           home: Wrapper(),

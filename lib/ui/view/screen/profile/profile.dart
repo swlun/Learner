@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:learner/core/crud/userProfileCRUD.dart';
 import 'package:learner/core/models/userProfile.dart';

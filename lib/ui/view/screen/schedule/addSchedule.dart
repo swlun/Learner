@@ -1,11 +1,13 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:learner/core/crud/activitiesListCRUD.dart';
+import 'package:learner/core/crud/userActivitiesCRUD.dart';
+import 'package:provider/provider.dart';
 
 class AddSchedule extends StatefulWidget {
   final BuildContext context;
-  final String uid;
-  AddSchedule({this.context, this.uid});
+  AddSchedule({this.context});
 
   @override
   _AddScheduleState createState() => _AddScheduleState();
@@ -17,10 +19,38 @@ class _AddScheduleState extends State<AddSchedule> {
   final timeFormat = DateFormat('HH:mm');
 
   //text field state
-  String _date, _description, _location, _time, _userId, _tag, _price;
+  String _address,
+      _date,
+      _description,
+      _endTime,
+      _title,
+      _location,
+      _price,
+      _startTime,
+      _subject,
+      _tag;
 
   @override
   Widget build(BuildContext context) {
+    final userActivitiesProvider = Provider.of<UserActivitiesCRUD>(context);
+    final activitiesListProvider = Provider.of<ActivitiesListCRUD>(context);
+
+    Future<bool> saveForm() async {
+      if (_formKey.currentState.validate()) {
+        _formKey.currentState.save();
+
+        print('location: ' + _location);
+
+        userActivitiesProvider.addActivity(_address, _date, _description,
+            _endTime, _title, _location, _price, _startTime, _subject, _tag);
+
+        activitiesListProvider.addActivity(_address, _date, _description,
+            _endTime, _title, _location, _price, _startTime, _subject, _tag);
+      }
+
+      return _formKey.currentState.validate();
+    }
+
     return SingleChildScrollView(
       child: AlertDialog(
         title: Text('New Event'),
@@ -30,125 +60,162 @@ class _AddScheduleState extends State<AddSchedule> {
           key: _formKey,
           child: Container(
             width: 300,
-            height: 510,
-            child: Column(
-              children: <Widget>[
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Description',
-                    hintText: 'Something about your class......',
-                  ),
-                  onSaved: (input) => _description = input,
-                ),
-                ListTile(
-                  dense: true,
-                  contentPadding: EdgeInsets.only(left: 0.0, right: 0.0),
-                  subtitle: DropdownButtonFormField<String>(
-                    decoration: InputDecoration(
-                      isDense: true,
-                      hasFloatingPlaceholder: true,
-                      labelText: "Location",
+            height: 400,
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  ListTile(
+                    dense: true,
+                    contentPadding: EdgeInsets.only(left: 0.0, right: 0.0),
+                    subtitle: DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        hasFloatingPlaceholder: true,
+                        labelText: "Subject",
+                      ),
+                      value: _subject,
+                      onChanged: (String val) {
+                        setState(() => _subject = val);
+                      },
+                      items: <String>['English', 'Chinese', 'Math', 'Other']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                     ),
-                    value: _location,
-                    onChanged: (String val) {
-                      setState(() => _location = val);
-                    },
-                    items: <String>[
-                      'Kuala Lumpur',
-                      'Petaling Jaya',
-                      'Johor',
-                      'Pulau Pinang'
-                    ].map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
                   ),
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Address',
-                    hintText: 'e.g. 14, Jalan Gembira',
-                  ),
-                  onSaved: (input) => _location = input,
-                ),
-                TextFormField(
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: 'Price',
-                    hintText: 'e.g. 100',
-                  ),
-                  onSaved: (input) => _price = input,
-                ),
-                ListTile(
-                  dense: true,
-                  contentPadding: EdgeInsets.only(left: 0.0, right: 0.0),
-                  subtitle: DateTimeField(
-                    decoration: InputDecoration(
-                      isDense: true,
-                      hasFloatingPlaceholder: true,
-                      labelText: "Date",
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Title',
+                      hintText: 'Please insert a class title',
                     ),
-                    format: dateFormat,
-                    onShowPicker: (context, currentValue) {
-                      return showDatePicker(
-                        context: context,
-                        initialDate: currentValue ?? DateTime.now(),
-                        firstDate: DateTime(1900),
-                        lastDate: DateTime(2100),
-                      );
-                    },
+                    onSaved: (input) => _title = input,
                   ),
-                ),
-                ListTile(
-                  dense: true,
-                  contentPadding: EdgeInsets.only(left: 0.0, right: 0.0),
-                  subtitle: DateTimeField(
-                    decoration: InputDecoration(
-                      isDense: true,
-                      hasFloatingPlaceholder: true,
-                      labelText: "Start Time",
+                  TextFormField(
+                    keyboardType: TextInputType.multiline,
+                    maxLines: 3,
+                    decoration: const InputDecoration(
+                      labelText: 'Description',
+                      hintText: 'Something about your class......',
                     ),
-                    format: timeFormat,
-                    onShowPicker: (context, currentValue) async {
-                      final TimeOfDay time = await showTimePicker(
-                        context: context,
-                        initialTime: TimeOfDay.fromDateTime(
-                            currentValue ?? DateTime.now()),
-                      );
-                      return DateTimeField.convert(time);
-                    },
+                    onSaved: (input) => _description = input,
                   ),
-                ),
-                ListTile(
-                  dense: true,
-                  contentPadding: EdgeInsets.only(left: 0.0, right: 0.0),
-                  subtitle: DateTimeField(
-                    decoration: InputDecoration(
-                      isDense: true,
-                      hasFloatingPlaceholder: true,
-                      labelText: "End Time",
+                  ListTile(
+                    dense: true,
+                    contentPadding: EdgeInsets.only(left: 0.0, right: 0.0),
+                    subtitle: DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        hasFloatingPlaceholder: true,
+                        labelText: "Location",
+                      ),
+                      value: _location,
+                      onChanged: (String val) {
+                        setState(() => _location = val);
+                      },
+                      items: <String>[
+                        'Kuala Lumpur',
+                        'Petaling Jaya',
+                        'Johor',
+                        'Pulau Pinang'
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                     ),
-                    format: timeFormat,
-                    onShowPicker: (context, currentValue) async {
-                      final TimeOfDay time = await showTimePicker(
-                        context: context,
-                        initialTime: TimeOfDay.fromDateTime(
-                            currentValue ?? DateTime.now()),
-                      );
-                      return DateTimeField.convert(time);
-                    },
                   ),
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Tag',
+                  TextFormField(
+                    maxLines: 2,
+                    decoration: const InputDecoration(
+                      labelText: 'Address',
+                      hintText: 'e.g. 14, Jalan Gembira',
+                    ),
+                    onSaved: (input) => _address = input,
                   ),
-                  onSaved: (input) => _tag = input,
-                ),
-                // flutter_tags
-              ],
+                  ListTile(
+                    dense: true,
+                    contentPadding: EdgeInsets.only(left: 0.0, right: 0.0),
+                    subtitle: DateTimeField(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        hasFloatingPlaceholder: true,
+                        labelText: "Date",
+                      ),
+                      format: dateFormat,
+                      onSaved: (input) => _date = input.toString(),
+                      onShowPicker: (context, currentValue) {
+                        return showDatePicker(
+                          context: context,
+                          initialDate: currentValue ?? DateTime.now(),
+                          firstDate: DateTime(1900),
+                          lastDate: DateTime(2100),
+                        );
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    dense: true,
+                    contentPadding: EdgeInsets.only(left: 0.0, right: 0.0),
+                    subtitle: DateTimeField(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        hasFloatingPlaceholder: true,
+                        labelText: "Start Time",
+                      ),
+                      format: timeFormat,
+                      onSaved: (input) => _startTime = input.toString(),
+                      onShowPicker: (context, currentValue) async {
+                        final TimeOfDay time = await showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.fromDateTime(
+                              currentValue ?? DateTime.now()),
+                        );
+                        return DateTimeField.convert(time);
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    dense: true,
+                    contentPadding: EdgeInsets.only(left: 0.0, right: 0.0),
+                    subtitle: DateTimeField(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        hasFloatingPlaceholder: true,
+                        labelText: "End Time",
+                      ),
+                      format: timeFormat,
+                      onSaved: (input) => _endTime = input.toString(),
+                      onShowPicker: (context, currentValue) async {
+                        final TimeOfDay time = await showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.fromDateTime(
+                              currentValue ?? DateTime.now()),
+                        );
+                        return DateTimeField.convert(time);
+                      },
+                    ),
+                  ),
+                  TextFormField(
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      labelText: 'Price',
+                      hintText: 'e.g. 100',
+                    ),
+                    onSaved: (input) => _price = input,
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Tag',
+                    ),
+                    onSaved: (input) => _tag = input,
+                  ),
+                  // flutter_tags
+                ],
+              ),
             ),
           ),
         ),
@@ -166,28 +233,12 @@ class _AddScheduleState extends State<AddSchedule> {
             child: Text('Add'),
             color: Colors.green,
             onPressed: () async {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-              }
+              saveForm();
               Navigator.of(context).pop(true);
             },
           ),
         ],
       ),
     );
-  }
-
-  Future<bool> saveForm() async {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
-      addActivity(context);
-    }
-
-    return _formKey.currentState.validate();
-  }
-
-  Future addActivity(BuildContext context) async {
-    // UserActivities(uid: widget.uid)
-    //     .editUserProfile(_name, _birthday, _location, _occupation, _imageUrl);
   }
 }

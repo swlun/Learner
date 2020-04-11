@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:learner/core/crud/userProfileCRUD.dart';
-import 'package:learner/core/models/userProfile.dart';
 import 'package:learner/ui/view/screen/chat/chat.dart';
 import 'package:learner/ui/view/screen/favourite/favourite.dart';
 import 'package:learner/ui/view/screen/profile/profile.dart';
 import 'package:learner/ui/view/screen/schedule/schedule.dart';
-import 'package:provider/provider.dart';
-import 'core/models/user.dart';
 import 'core/services/auth.dart';
 import 'ui/view/screen/home/home.dart';
 import 'ui/widgets/loading.dart';
@@ -49,15 +45,7 @@ class _ScreenState extends State<DefaultScreen> {
   ];
 
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
-
-    return 
-    // MultiProvider(
-    //   providers: [
-    //     // StreamProvider<UserProfile>.value(value: UserProfileCRUD(uid: user.uid).userProfile),
-    //   ],
-    //   child: 
-    loading
+    return loading
           ? Loading()
           : Scaffold(
               //backgroundColor: Colors.blue[100],
