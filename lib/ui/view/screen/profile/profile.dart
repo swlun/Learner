@@ -25,7 +25,7 @@ class Profile extends StatelessWidget {
                       backgroundColor: Colors.blue,
                       backgroundImage: NetworkImage(profile.data.userImage),
                     ),
-                    title: Text('test'),
+                    title: Text(profile.data.name),
                     subtitle: InkWell(
                       child: Text(
                         'View Profile',

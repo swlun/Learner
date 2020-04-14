@@ -5,14 +5,16 @@ import 'package:learner/core/models/activities.dart';
 class ActivitiesListCRUD extends ChangeNotifier {
 
   final String uid;
-  ActivitiesListCRUD({this.uid});
+  final String subject;
+  final String location;
+  ActivitiesListCRUD({this.uid, this.subject, this.location});
   
   //collection reference
   final CollectionReference activitiesListCollection = Firestore.instance.collection('ActivitiesList');
 
   //get activities stream
   Stream<List<Activities>> get activitiesList {
-    return activitiesListCollection.document('English').collection('kl').snapshots()
+    return activitiesListCollection.document(subject).collection(location).snapshots()
     .map(_activitiesListFromSnapshot);
   }
 
@@ -20,13 +22,17 @@ class ActivitiesListCRUD extends ChangeNotifier {
   List<Activities> _activitiesListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return Activities(
+        id: doc.documentID,
+        address: doc.data['address'],
         date: doc.data['date'],
         description: doc.data['description'],
+        endTime: doc.data['endTime'],
         location: doc.data['location'],
-        time: doc.data['time'],
-        tag: doc.data['tag'].cast<String>(),
-        userId: doc.data['userId'],
         price: doc.data['price'],
+        startTime: doc.data['startTime'],
+        subject: doc.data['subject'],
+        tag: doc.data['tag'],
+        title: doc.data['title'],
       );
     }).toList();
   }

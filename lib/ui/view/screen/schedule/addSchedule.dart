@@ -53,172 +53,176 @@ class _AddScheduleState extends State<AddSchedule> {
 
     return SingleChildScrollView(
       child: AlertDialog(
-        title: Text('New Event'),
+        title: Text('New Schedule'),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10.0))),
         content: Form(
           key: _formKey,
           child: Container(
-            width: 300,
-            height: 400,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height - 200,
             child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  ListTile(
-                    dense: true,
-                    contentPadding: EdgeInsets.only(left: 0.0, right: 0.0),
-                    subtitle: DropdownButtonFormField<String>(
-                      decoration: InputDecoration(
-                        isDense: true,
-                        hasFloatingPlaceholder: true,
-                        labelText: "Subject",
+              child: Padding(
+                padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      dense: true,
+                      contentPadding: EdgeInsets.only(left: 0.0, right: 0.0),
+                      subtitle: DropdownButtonFormField<String>(
+                        decoration: InputDecoration(
+                          isDense: true,
+                          hasFloatingPlaceholder: true,
+                          labelText: "Subject",
+                        ),
+                        value: _subject,
+                        onChanged: (String val) {
+                          setState(() => _subject = val);
+                        },
+                        items: <String>['English', 'Chinese', 'Math', 'Other']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
                       ),
-                      value: _subject,
-                      onChanged: (String val) {
-                        setState(() => _subject = val);
-                      },
-                      items: <String>['English', 'Chinese', 'Math', 'Other']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
                     ),
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Title',
-                      hintText: 'Please insert a class title',
-                    ),
-                    onSaved: (input) => _title = input,
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.multiline,
-                    maxLines: 3,
-                    decoration: const InputDecoration(
-                      labelText: 'Description',
-                      hintText: 'Something about your class......',
-                    ),
-                    onSaved: (input) => _description = input,
-                  ),
-                  ListTile(
-                    dense: true,
-                    contentPadding: EdgeInsets.only(left: 0.0, right: 0.0),
-                    subtitle: DropdownButtonFormField<String>(
-                      decoration: InputDecoration(
-                        isDense: true,
-                        hasFloatingPlaceholder: true,
-                        labelText: "Location",
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Title',
+                        hintText: 'Please insert a class title',
                       ),
-                      value: _location,
-                      onChanged: (String val) {
-                        setState(() => _location = val);
-                      },
-                      items: <String>[
-                        'Kuala Lumpur',
-                        'Petaling Jaya',
-                        'Johor',
-                        'Pulau Pinang'
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                      onSaved: (input) => _title = input,
                     ),
-                  ),
-                  TextFormField(
-                    maxLines: 2,
-                    decoration: const InputDecoration(
-                      labelText: 'Address',
-                      hintText: 'e.g. 14, Jalan Gembira',
-                    ),
-                    onSaved: (input) => _address = input,
-                  ),
-                  ListTile(
-                    dense: true,
-                    contentPadding: EdgeInsets.only(left: 0.0, right: 0.0),
-                    subtitle: DateTimeField(
-                      decoration: InputDecoration(
-                        isDense: true,
-                        hasFloatingPlaceholder: true,
-                        labelText: "Date",
+                    TextFormField(
+                      keyboardType: TextInputType.multiline,
+                      maxLines: 3,
+                      decoration: const InputDecoration(
+                        labelText: 'Description',
+                        hintText: 'Something about your class......',
                       ),
-                      format: dateFormat,
-                      onSaved: (input) => _date = input.toString(),
-                      onShowPicker: (context, currentValue) {
-                        return showDatePicker(
-                          context: context,
-                          initialDate: currentValue ?? DateTime.now(),
-                          firstDate: DateTime(1900),
-                          lastDate: DateTime(2100),
-                        );
-                      },
+                      onSaved: (input) => _description = input,
                     ),
-                  ),
-                  ListTile(
-                    dense: true,
-                    contentPadding: EdgeInsets.only(left: 0.0, right: 0.0),
-                    subtitle: DateTimeField(
-                      decoration: InputDecoration(
-                        isDense: true,
-                        hasFloatingPlaceholder: true,
-                        labelText: "Start Time",
+                    ListTile(
+                      dense: true,
+                      contentPadding: EdgeInsets.only(left: 0.0, right: 0.0),
+                      subtitle: DropdownButtonFormField<String>(
+                        decoration: InputDecoration(
+                          isDense: true,
+                          hasFloatingPlaceholder: true,
+                          labelText: "Location",
+                        ),
+                        value: _location,
+                        onChanged: (String val) {
+                          setState(() => _location = val);
+                        },
+                        items: <String>[
+                          'Kuala Lumpur',
+                          'Petaling Jaya',
+                          'Johor',
+                          'Pulau Pinang'
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
                       ),
-                      format: timeFormat,
-                      onSaved: (input) => _startTime = input.toString(),
-                      onShowPicker: (context, currentValue) async {
-                        final TimeOfDay time = await showTimePicker(
-                          context: context,
-                          initialTime: TimeOfDay.fromDateTime(
-                              currentValue ?? DateTime.now()),
-                        );
-                        return DateTimeField.convert(time);
-                      },
                     ),
-                  ),
-                  ListTile(
-                    dense: true,
-                    contentPadding: EdgeInsets.only(left: 0.0, right: 0.0),
-                    subtitle: DateTimeField(
-                      decoration: InputDecoration(
-                        isDense: true,
-                        hasFloatingPlaceholder: true,
-                        labelText: "End Time",
+                    TextFormField(
+                      maxLines: 2,
+                      decoration: const InputDecoration(
+                        labelText: 'Address',
+                        hintText: 'e.g. 14, Jalan Gembira',
                       ),
-                      format: timeFormat,
-                      onSaved: (input) => _endTime = input.toString(),
-                      onShowPicker: (context, currentValue) async {
-                        final TimeOfDay time = await showTimePicker(
-                          context: context,
-                          initialTime: TimeOfDay.fromDateTime(
-                              currentValue ?? DateTime.now()),
-                        );
-                        return DateTimeField.convert(time);
-                      },
+                      onSaved: (input) => _address = input,
                     ),
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Price',
-                      hintText: 'e.g. 100',
+                    ListTile(
+                      dense: true,
+                      contentPadding: EdgeInsets.only(left: 0.0, right: 0.0),
+                      subtitle: DateTimeField(
+                        decoration: InputDecoration(
+                          isDense: true,
+                          hasFloatingPlaceholder: true,
+                          labelText: "Date",
+                        ),
+                        format: dateFormat,
+                        onSaved: (input) => _date = input.toString(),
+                        onShowPicker: (context, currentValue) {
+                          return showDatePicker(
+                            context: context,
+                            initialDate: currentValue ?? DateTime.now(),
+                            firstDate: DateTime(1900),
+                            lastDate: DateTime(2100),
+                          );
+                        },
+                      ),
                     ),
-                    onSaved: (input) => _price = input,
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Tag',
+                    ListTile(
+                      dense: true,
+                      contentPadding: EdgeInsets.only(left: 0.0, right: 0.0),
+                      subtitle: DateTimeField(
+                        decoration: InputDecoration(
+                          isDense: true,
+                          hasFloatingPlaceholder: true,
+                          labelText: "Start Time",
+                        ),
+                        format: timeFormat,
+                        onSaved: (input) => _startTime = input.toString(),
+                        onShowPicker: (context, currentValue) async {
+                          final TimeOfDay time = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.fromDateTime(
+                                currentValue ?? DateTime.now()),
+                          );
+                          return DateTimeField.convert(time);
+                        },
+                      ),
                     ),
-                    onSaved: (input) => _tag = input,
-                  ),
-                  // flutter_tags
-                ],
+                    ListTile(
+                      dense: true,
+                      contentPadding: EdgeInsets.only(left: 0.0, right: 0.0),
+                      subtitle: DateTimeField(
+                        decoration: InputDecoration(
+                          isDense: true,
+                          hasFloatingPlaceholder: true,
+                          labelText: "End Time",
+                        ),
+                        format: timeFormat,
+                        onSaved: (input) => _endTime = input.toString(),
+                        onShowPicker: (context, currentValue) async {
+                          final TimeOfDay time = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.fromDateTime(
+                                currentValue ?? DateTime.now()),
+                          );
+                          return DateTimeField.convert(time);
+                        },
+                      ),
+                    ),
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: 'Price',
+                        hintText: 'e.g. 100',
+                      ),
+                      onSaved: (input) => _price = input,
+                    ),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Tag',
+                      ),
+                      onSaved: (input) => _tag = input,
+                    ),
+                    // flutter_tags
+                  ],
+                ),
               ),
             ),
           ),
         ),
+        contentPadding: EdgeInsets.all(0.0),
         actions: <Widget>[
           MaterialButton(
             elevation: 5.0,

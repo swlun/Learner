@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learner/ui/view/screen/chat/chat.dart';
 import 'package:learner/ui/view/screen/favourite/favourite.dart';
 import 'package:learner/ui/view/screen/profile/profile.dart';
+import 'package:learner/ui/view/screen/schedule/addSchedule.dart';
 import 'package:learner/ui/view/screen/schedule/schedule.dart';
 import 'core/services/auth.dart';
 import 'ui/view/screen/home/home.dart';
@@ -46,48 +47,77 @@ class _ScreenState extends State<DefaultScreen> {
 
   Widget build(BuildContext context) {
     return loading
-          ? Loading()
-          : Scaffold(
-              //backgroundColor: Colors.blue[100],
-              appBar: AppBar(
-                backgroundColor: Colors.transparent,
-                title: Text(
-                  'Learner',
-                  style: TextStyle(color: Colors.blueGrey),
-                ),
-                elevation: 0.0,
-                actions: <Widget>[
-                  FlatButton.icon(
-                      onPressed: () async {
-                        setState(() => loading = true);
-                        await _auth.signOut();
-                        setState(() => loading = false);
-                      },
-                      icon: Icon(Icons.exit_to_app),
-                      label: Text('Logout'))
-                ],
+        ? Loading()
+        : Scaffold(
+            //backgroundColor: Colors.blue[100],
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              title: Text(
+                'Learner',
+                style: TextStyle(color: Colors.blueGrey),
               ),
-              body: SafeArea(
-                top: false,
-                child: Container(
-                  child: _pages[_currentIndex],
-                ),
+              elevation: 0.0,
+              actions: <Widget>[
+                FlatButton.icon(
+                    onPressed: () async {
+                      setState(() => loading = true);
+                      await _auth.signOut();
+                      setState(() => loading = false);
+                    },
+                    icon: Icon(Icons.exit_to_app),
+                    label: Text('Logout'))
+              ],
+            ),
+            body: SafeArea(
+              top: false,
+              child: Container(
+                child: _pages[_currentIndex],
               ),
-              bottomNavigationBar: BottomNavigationBar(
-                onTap: (int index) {
-                  setState(() {
-                    _currentIndex = index;
-                  });
-                },
-                currentIndex: _currentIndex,
-                type: BottomNavigationBarType.fixed,
-                items: allDestinations.map((PageNavigate item) {
-                  return BottomNavigationBarItem(
-                      icon: Icon(item.icon),
-                      backgroundColor: Colors.grey[800],
-                      title: Text(item.title));
-                }).toList(),
-              ),
-    );
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+              onTap: (int index) {
+                setState(() {
+                  _currentIndex = index;
+                });
+              },
+              currentIndex: _currentIndex,
+              type: BottomNavigationBarType.fixed,
+              items: allDestinations.map((PageNavigate item) {
+                return BottomNavigationBarItem(
+                    icon: Icon(item.icon),
+                    backgroundColor: Colors.grey[800],
+                    title: Text(item.title));
+              }).toList(),
+            ),
+            floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+            floatingActionButton: _currentIndex != 2
+                ? new Container(width: 0, height: 0)
+                : new FloatingActionButton(
+                    onPressed: () {
+                      return showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AddSchedule(context: context);
+                          }).then((val) {
+                        if (val != null) {
+                          if (val) {
+                            SnackBar hint = SnackBar(
+                              content: Text('New Event Added'),
+                            );
+                            Scaffold.of(context).showSnackBar(hint);
+                          } else {
+                            SnackBar hint = SnackBar(
+                              content:
+                                  Text('Event Not Added, Please Try Again.'),
+                            );
+                            Scaffold.of(context).showSnackBar(hint);
+                          }
+                        }
+                      });
+                    },
+                    tooltip: 'Add Favourite',
+                    child: new Icon(Icons.add),
+                  ),
+          );
   }
 }
