@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:learner/core/crud/activitiesListCRUD.dart';
 import 'package:learner/core/crud/userProfileCRUD.dart';
 import 'package:learner/core/crud/userActivitiesCRUD.dart';
-import 'package:learner/core/models/userProfile.dart';
 import 'package:learner/wrapper.dart';
 import 'package:provider/provider.dart';
 
