@@ -33,6 +33,7 @@ dependencies:
   datetime_picker_formfield: ^1.0.0
   dropdown_formfield: ^0.1.1
   flutter_tags: ^0.4.8
+  rxdart: ^0.24.1
 
 dev_dependencies:
   flutter_test:

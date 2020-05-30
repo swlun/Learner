@@ -72,7 +72,7 @@ class _AddScheduleState extends State<AddSchedule> {
                       subtitle: DropdownButtonFormField<String>(
                         decoration: InputDecoration(
                           isDense: true,
-                          hasFloatingPlaceholder: true,
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
                           labelText: "Subject",
                         ),
                         value: _subject,
@@ -110,7 +110,7 @@ class _AddScheduleState extends State<AddSchedule> {
                       subtitle: DropdownButtonFormField<String>(
                         decoration: InputDecoration(
                           isDense: true,
-                          hasFloatingPlaceholder: true,
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
                           labelText: "Location",
                         ),
                         value: _location,
@@ -144,7 +144,7 @@ class _AddScheduleState extends State<AddSchedule> {
                       subtitle: DateTimeField(
                         decoration: InputDecoration(
                           isDense: true,
-                          hasFloatingPlaceholder: true,
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
                           labelText: "Date",
                         ),
                         format: dateFormat,
@@ -165,7 +165,7 @@ class _AddScheduleState extends State<AddSchedule> {
                       subtitle: DateTimeField(
                         decoration: InputDecoration(
                           isDense: true,
-                          hasFloatingPlaceholder: true,
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
                           labelText: "Start Time",
                         ),
                         format: timeFormat,
@@ -186,7 +186,7 @@ class _AddScheduleState extends State<AddSchedule> {
                       subtitle: DateTimeField(
                         decoration: InputDecoration(
                           isDense: true,
-                          hasFloatingPlaceholder: true,
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
                           labelText: "End Time",
                         ),
                         format: timeFormat,
