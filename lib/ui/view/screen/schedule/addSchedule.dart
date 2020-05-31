@@ -41,7 +41,7 @@ class _AddScheduleState extends State<AddSchedule> {
 
         print('location: ' + _location);
 
-        userActivitiesProvider.addActivity(_address, _date, _description,
+        userActivitiesProvider.addActivity('teacherPending', _address, _date, _description,
             _endTime, _title, _location, _price, _startTime, _subject, _tag);
 
         activitiesListProvider.addActivity(_address, _date, _description,

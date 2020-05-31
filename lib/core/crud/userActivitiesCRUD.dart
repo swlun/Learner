@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:learner/core/models/activities.dart';
+import 'package:learner/core/models/teacherDoneList.dart';
+import 'package:learner/core/models/teacherPendingList.dart';
 
 class UserActivitiesCRUD extends ChangeNotifier {
   final String uid;
-  final String request;
-  UserActivitiesCRUD({this.uid, this.request});
+  UserActivitiesCRUD({this.uid});
 
   //collection reference
   final CollectionReference userActivitiesCollection =
@@ -13,6 +14,7 @@ class UserActivitiesCRUD extends ChangeNotifier {
 
   //add new activities
   Future addActivity(
+      String request,
       String address,
       String date,
       String description,
@@ -25,7 +27,7 @@ class UserActivitiesCRUD extends ChangeNotifier {
       String tag) async {
     return await userActivitiesCollection
         .document(this.uid)
-        .collection(this.request)
+        .collection(request)
         .add({
       'address': address,
       'date': date,
@@ -40,10 +42,10 @@ class UserActivitiesCRUD extends ChangeNotifier {
     });
   }
 
-  Future<List<Activities>> get getActivitiesList {
+  Future<List<Activities>> getActivitiesList( String request) {
     return userActivitiesCollection
         .document(this.uid)
-        .collection(this.request)
+        .collection(request)
         .getDocuments()
         .then((value) {
       return value.documents.map((doc) {
@@ -62,6 +64,14 @@ class UserActivitiesCRUD extends ChangeNotifier {
         );
       }).toList();
     });
+  }
+
+  TeacherPendingList getTeacherPendingActivitiesList() {
+    return TeacherPendingList(teacherPendingList: getActivitiesList('teacherPending'));
+  }
+
+  TeacherDoneList getTeacherDoneActivitiesList() {
+    return TeacherDoneList(teacherDoneList: getActivitiesList('teacherDone'));
   }
 
   //get activities list from snapshot

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:learner/core/crud/activitiesListCRUD.dart';
 import 'package:learner/core/crud/userProfileCRUD.dart';
 import 'package:learner/core/crud/userActivitiesCRUD.dart';
+import 'package:learner/core/models/teacherDoneList.dart';
+import 'package:learner/core/models/teacherPendingList.dart';
 import 'package:learner/wrapper.dart';
 import 'package:provider/provider.dart';
 
@@ -28,6 +30,8 @@ class MyApp extends StatelessWidget {
             create: (_) => AuthService().user,
             initialData: null,
           ),
+          ListenableProxyProvider<User, TeacherPendingList>( update: (_, user, __) => UserActivitiesCRUD(uid: user.uid).getTeacherPendingActivitiesList(),),
+          ListenableProxyProvider<User, TeacherDoneList>( update: (_, user, __) => UserActivitiesCRUD(uid: user.uid).getTeacherDoneActivitiesList(),),
           ListenableProxyProvider<User, UserProfileCRUD>(
               update: (_, user, __) => UserProfileCRUD(uid: user.uid)),
           ListenableProxyProvider<User, UserActivitiesCRUD>(
