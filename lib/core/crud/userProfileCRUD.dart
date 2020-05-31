@@ -68,14 +68,10 @@ class UserProfileCRUD extends ChangeNotifier {
   }
 
   // update user favourite
-  // Future<void> addFavourite( String activitiesId) {
+   Future<void> addFavourite( String favouriteId) {
 
-  //   return usersCollection.document(this.uid).updateData({
-  //     'favourites': 
-  //   });
-  // }
-
-  // Future<void> updateDocument(Map data , String id) {
-  //   return ref.document(id).updateData(data) ;
-  // }
+     return usersCollection.document(this.uid).updateData({
+       'favourites': favouriteId
+     });
+   }
 }

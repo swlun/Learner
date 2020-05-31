@@ -11,9 +11,9 @@ class UserProfile {
   final String birthday;
   final String id;
   final String userImage;
-  final String favourite;
+  final String favourites;
 
-  UserProfile({this.name, this.age, this.location, this.contactNumber, this.occupation, this.description, this.student, this.teacher, this.joinedIn, this.birthday, this.id, this.userImage, this.favourite});
+  UserProfile({this.name, this.age, this.location, this.contactNumber, this.occupation, this.description, this.student, this.teacher, this.joinedIn, this.birthday, this.id, this.userImage, this.favourites});
 
   UserProfile.fromMap(Map snapshot, String id) :
     id = id ?? '',
@@ -28,7 +28,7 @@ class UserProfile {
     joinedIn = snapshot['joinedIn'] ?? '',
     birthday = snapshot['birthday'] ?? '',
     userImage = snapshot['userImage'] ?? '',
-    favourite = snapshot['favourite'] ?? '';
+    favourites = snapshot['favourites'] ?? '';
       
   toJson() {
     return {
@@ -44,6 +44,7 @@ class UserProfile {
       "joinedIn": joinedIn,
       "birthday": birthday,
       "userImage": userImage,
+      "favourites": favourites
     };
   }
 }  

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learner/core/crud/activitiesListCRUD.dart';
+import 'package:learner/core/crud/userProfileCRUD.dart';
 import 'package:learner/core/models/activities.dart';
 import 'package:learner/core/models/user.dart';
 import 'package:learner/core/models/userProfile.dart';
@@ -17,7 +18,7 @@ class _ActivitiesListState extends State<ActivitiesList> {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     final userProfile = Provider.of<UserProfile>(context);
-    final List<String> favouriteList = userProfile.favourite.split(" ");
+    final List<String> favouriteList = userProfile.favourites.split(" ");
 
     return StreamBuilder(
       stream: ActivitiesListCRUD(
@@ -142,7 +143,14 @@ class _ActivitiesListState extends State<ActivitiesList> {
                                     Icons.favorite_border,
                                     size: 20.0,
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    favouriteList.contains(currentActivities.id) ? favouriteList.removeWhere((id) => id == currentActivities.id) : favouriteList.add(currentActivities.id);
+
+                                    String favouriteString = favouriteList.join(' ');
+
+                                    UserProfileCRUD(uid: user.uid).addFavourite(favouriteString);
+                                    print(favouriteString);
+                                  },
                                 ),
                               ],
                             ),
