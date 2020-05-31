@@ -18,7 +18,7 @@ class _ActivitiesListState extends State<ActivitiesList> {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     final userProfile = Provider.of<UserProfile>(context);
-    final List<String> favouriteList = userProfile.favourites ?? new List<String>() ;
+    final List<String> favouriteList = userProfile.favourites;
 
     return StreamBuilder(
       stream: ActivitiesListCRUD(
