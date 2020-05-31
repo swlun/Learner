@@ -38,12 +38,14 @@ class UserProfileCRUD extends ChangeNotifier {
     });
   }
 
+  //get user profile
   Future<UserProfile> get userProfile async {
     final profile = await usersCollection.document(this.uid).get();
 
     return UserProfile.fromMap(profile.data, this.uid);
   }
 
+  //stream data
   Stream<UserProfile> get userProfileStream {
     final profile = usersCollection
         .document(this.uid)
@@ -64,4 +66,16 @@ class UserProfileCRUD extends ChangeNotifier {
       'userImage': userImage ?? '',
     });
   }
+
+  // update user favourite
+  // Future<void> addFavourite( String activitiesId) {
+
+  //   return usersCollection.document(this.uid).updateData({
+  //     'favourites': 
+  //   });
+  // }
+
+  // Future<void> updateDocument(Map data , String id) {
+  //   return ref.document(id).updateData(data) ;
+  // }
 }

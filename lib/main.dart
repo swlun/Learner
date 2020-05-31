@@ -7,6 +7,7 @@ import 'package:learner/core/crud/userProfileCRUD.dart';
 import 'package:learner/core/crud/userActivitiesCRUD.dart';
 import 'package:learner/core/models/teacherDoneList.dart';
 import 'package:learner/core/models/teacherPendingList.dart';
+import 'package:learner/core/models/userProfile.dart';
 import 'package:learner/wrapper.dart';
 import 'package:provider/provider.dart';
 
@@ -24,27 +25,33 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-        providers: [
-          StreamProvider<User>(
-            create: (_) => AuthService().user,
-            initialData: null,
-          ),
-          ListenableProxyProvider<User, TeacherPendingList>( update: (_, user, __) => UserActivitiesCRUD(uid: user.uid).getTeacherPendingActivitiesList(),),
-          ListenableProxyProvider<User, TeacherDoneList>( update: (_, user, __) => UserActivitiesCRUD(uid: user.uid).getTeacherDoneActivitiesList(),),
-          ListenableProxyProvider<User, UserProfileCRUD>(
-              update: (_, user, __) => UserProfileCRUD(uid: user.uid)),
-          ListenableProxyProvider<User, UserActivitiesCRUD>(
-              update: (_, user, __) => UserActivitiesCRUD(uid: user.uid)),
-          ListenableProxyProvider<User, ActivitiesListCRUD>(
-              update: (_, user, __) => ActivitiesListCRUD(uid: user.uid)),
-        ],
-        child: MaterialApp(
-          home: Wrapper(),
-          title: 'Learner',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-        ));
+    return StreamBuilder(
+          stream: AuthService().user,
+          builder: (_, AsyncSnapshot<User> user) {
+            return MultiProvider(
+          providers: [
+            StreamProvider<User>(
+              create: (_) => AuthService().user,
+              initialData: null,
+            ),
+            ChangeNotifierProvider<TeacherPendingList>(create: (_) => UserActivitiesCRUD(uid: user.data.uid).getTeacherPendingActivitiesList(),),
+            //ListenableProxyProvider<User, TeacherPendingList>( update: (_, user, __) => UserActivitiesCRUD(uid: user.uid).getTeacherPendingActivitiesList(),),
+            ListenableProxyProvider<User, TeacherDoneList>( update: (_, user, __) => UserActivitiesCRUD(uid: user.uid).getTeacherDoneActivitiesList(),),
+            StreamProvider<UserProfile>( create: (_) => UserProfileCRUD(uid: user.data.uid).userProfileStream),
+            ListenableProxyProvider<User, UserProfileCRUD>(
+                update: (_, user, __) => UserProfileCRUD(uid: user.uid)),
+            ListenableProxyProvider<User, UserActivitiesCRUD>(
+                update: (_, user, __) => UserActivitiesCRUD(uid: user.uid)),
+            ListenableProxyProvider<User, ActivitiesListCRUD>(
+                update: (_, user, __) => ActivitiesListCRUD(uid: user.uid)),
+          ],
+          child: MaterialApp(
+            home: Wrapper(),
+            title: 'Learner',
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+            ),
+          ));}
+    );
   }
 }
