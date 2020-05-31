@@ -11,7 +11,7 @@ class UserProfile {
   final String birthday;
   final String id;
   final String userImage;
-  final String favourites;
+  final List<String> favourites;
 
   UserProfile({this.name, this.age, this.location, this.contactNumber, this.occupation, this.description, this.student, this.teacher, this.joinedIn, this.birthday, this.id, this.userImage, this.favourites});
 
@@ -28,7 +28,7 @@ class UserProfile {
     joinedIn = snapshot['joinedIn'] ?? '',
     birthday = snapshot['birthday'] ?? '',
     userImage = snapshot['userImage'] ?? '',
-    favourites = snapshot['favourites'] ?? '';
+    favourites = List.from(snapshot['favourites']) ?? List<String>();
       
   toJson() {
     return {

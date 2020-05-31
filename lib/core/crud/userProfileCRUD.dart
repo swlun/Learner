@@ -68,7 +68,7 @@ class UserProfileCRUD extends ChangeNotifier {
   }
 
   // update user favourite
-   Future<void> addFavourite( String favouriteId) {
+   Future<void> addFavourite( List<String> favouriteId) {
 
      return usersCollection.document(this.uid).updateData({
        'favourites': favouriteId

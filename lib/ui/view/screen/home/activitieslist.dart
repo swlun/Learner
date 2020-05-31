@@ -18,7 +18,7 @@ class _ActivitiesListState extends State<ActivitiesList> {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     final userProfile = Provider.of<UserProfile>(context);
-    final List<String> favouriteList = userProfile.favourites.split(" ");
+    final List<String> favouriteList = userProfile.favourites ?? new List<String>() ;
 
     return StreamBuilder(
       stream: ActivitiesListCRUD(
@@ -145,8 +145,7 @@ class _ActivitiesListState extends State<ActivitiesList> {
                                   ),
                                   onPressed: () {
                                     favouriteList.contains(currentActivities.id) ? favouriteList.removeWhere((id) => id == currentActivities.id) : favouriteList.add(currentActivities.id);
-                                    String favouriteString = favouriteList.join(' ');
-                                    UserProfileCRUD(uid: user.uid).addFavourite(favouriteString);
+                                    UserProfileCRUD(uid: user.uid).addFavourite(favouriteList);
                                   },
                                 ),
                               ],
