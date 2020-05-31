@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:learner/core/crud/userActivitiesCRUD.dart';
 import 'package:learner/core/models/activities.dart';
 import 'package:learner/core/models/teacherDoneList.dart';
 import 'package:learner/core/models/teacherPendingList.dart';
-import 'package:learner/core/models/user.dart';
 import 'package:learner/ui/widgets/loading.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +20,6 @@ class ScheduleList extends StatefulWidget {
 class _ScheduleListState extends State<ScheduleList> {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
     final pendingActivitiesList = Provider.of<TeacherPendingList>(context);
     final doneActivitiesList = Provider.of<TeacherDoneList>(context);
 

@@ -36,16 +36,19 @@ class _AddScheduleState extends State<AddSchedule> {
     final activitiesListProvider = Provider.of<ActivitiesListCRUD>(context);
 
     Future<bool> saveForm() async {
+      String docId;
+
       if (_formKey.currentState.validate()) {
         _formKey.currentState.save();
 
         print('location: ' + _location);
 
-        userActivitiesProvider.addActivity('teacherPending', _address, _date, _description,
-            _endTime, _title, _location, _price, _startTime, _subject, _tag);
+        await activitiesListProvider.addActivity(_address, _date, _description,
+            _endTime, _title, _location, _price, _startTime, _subject, _tag).then((value) => docId = value);
 
-        activitiesListProvider.addActivity(_address, _date, _description,
-            _endTime, _title, _location, _price, _startTime, _subject, _tag);
+        userActivitiesProvider.addActivity('teacherPending', _address, _date, _description,
+            _endTime, _title, _location, _price, _startTime, _subject, _tag, docId);
+
       }
 
       return _formKey.currentState.validate();

@@ -38,8 +38,8 @@ class ActivitiesListCRUD extends ChangeNotifier {
   }
 
   //add new activities 
-  Future addActivity(String address, String date, String description,String endTime, String title, String location, String price, String startTime, String subject, String tag) async {
-    return await activitiesListCollection.document(subject).collection(location).add({
+  Future<String> addActivity(String address, String date, String description,String endTime, String title, String location, String price, String startTime, String subject, String tag) async {
+    DocumentReference docRef = await activitiesListCollection.add({
       'address': address, 
       'date': date,
       'description': description,
@@ -51,5 +51,7 @@ class ActivitiesListCRUD extends ChangeNotifier {
       'subject': subject,
       'tag': tag,
     });
+
+    return docRef.documentID;
   }
 }

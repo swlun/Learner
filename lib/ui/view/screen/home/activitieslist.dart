@@ -145,11 +145,8 @@ class _ActivitiesListState extends State<ActivitiesList> {
                                   ),
                                   onPressed: () {
                                     favouriteList.contains(currentActivities.id) ? favouriteList.removeWhere((id) => id == currentActivities.id) : favouriteList.add(currentActivities.id);
-
                                     String favouriteString = favouriteList.join(' ');
-
                                     UserProfileCRUD(uid: user.uid).addFavourite(favouriteString);
-                                    print(favouriteString);
                                   },
                                 ),
                               ],

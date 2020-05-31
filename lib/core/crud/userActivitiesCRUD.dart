@@ -24,11 +24,14 @@ class UserActivitiesCRUD extends ChangeNotifier {
       String price,
       String startTime,
       String subject,
-      String tag) async {
+      String tag,
+      String id) async {
+        print(id);
     return await userActivitiesCollection
         .document(this.uid)
         .collection(request)
-        .add({
+        .document(id)
+        .setData({
       'address': address,
       'date': date,
       'description': description,
