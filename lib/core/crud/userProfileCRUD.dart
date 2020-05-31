@@ -35,6 +35,7 @@ class UserProfileCRUD extends ChangeNotifier {
       'teacher': teacher,
       'joinedIn': joinedIn,
       'userImage': userImage,
+      'favourites': new List<String>()
     });
   }
 

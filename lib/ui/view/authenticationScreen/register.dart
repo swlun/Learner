@@ -47,7 +47,7 @@ class _RegisterState extends State<Register> {
               SizedBox(height: 20.0),
               TextFormField(
                   decoration: textInputDecoration.copyWith(hintText: 'Password'),
-                  validator: (val) => val.isEmpty ? 'Enter a password' : null,
+                  validator: (val) => val.length < 6 ? 'Enter a password' : null,
                   obscureText: true,
                   onChanged: (val) {
                     setState(() => password = val);
