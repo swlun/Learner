@@ -33,8 +33,6 @@ class _AddScheduleState extends State<AddSchedule> {
 
   @override
   Widget build(BuildContext context) {
-    final userActivitiesProvider = Provider.of<UserActivitiesCRUD>(context);
-    final activitiesListProvider = Provider.of<ActivitiesListCRUD>(context);
     final userData = Provider.of<UserProfile>(context);
 
     List<String> teacherPendingList = userData.teacherPending;
@@ -45,14 +43,13 @@ class _AddScheduleState extends State<AddSchedule> {
       if (_formKey.currentState.validate()) {
         _formKey.currentState.save();
 
-        await activitiesListProvider.addActivity(_address, _date, _description,
+        await ActivitiesListCRUD(uid: userData.id).addActivity(_address, _date, _description,
             _endTime, _title, _location, _price, _startTime, _subject, _tag).then((value) => docId = value);
 
         teacherPendingList.add(docId);
 
-        userActivitiesProvider.addActivity(teacherPendingList);
+        UserActivitiesCRUD(uid: userData.id).addActivity(teacherPendingList);
       }
-
       return _formKey.currentState.validate();
     }
 

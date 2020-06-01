@@ -29,9 +29,9 @@ class _PendingScheduleState extends State<PendingSchedule> {
             padding: EdgeInsets.zero,
             width: double.maxFinite,
             child: ListView.builder(
-                itemCount: activitiesList.length,
+                itemCount: pendingList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  Activities currentActivities = activitiesList[index];
+                  Activities currentActivities = pendingList[index];
                   return Card(
                     elevation: 3,
                     child: Column(
