@@ -1,4 +1,4 @@
-class UserProfile {
+class Schedule {
   final String name;
   final int age;
   final String location;
@@ -12,9 +12,9 @@ class UserProfile {
   final String id;
   final String userImage;
 
-  UserProfile({this.name, this.age, this.location, this.contactNumber, this.occupation, this.description, this.student, this.teacher, this.joinedIn, this.birthday, this.id, this.userImage});
+  Schedule({this.name, this.age, this.location, this.contactNumber, this.occupation, this.description, this.student, this.teacher, this.joinedIn, this.birthday, this.id, this.userImage});
 
-  UserProfile.fromMap(Map snapshot, String id) :
+  Schedule.fromMap(Map snapshot, String id) :
     id = id ?? '',
     name = snapshot['name'] ?? '',
     age = snapshot['age'] ?? 0,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:learner/core/crud/activitiesListCRUD.dart';
 import 'package:learner/core/crud/userActivitiesCRUD.dart';
+import 'package:learner/core/models/userProfile.dart';
 import 'package:provider/provider.dart';
 
 class AddSchedule extends StatefulWidget {
@@ -34,6 +35,9 @@ class _AddScheduleState extends State<AddSchedule> {
   Widget build(BuildContext context) {
     final userActivitiesProvider = Provider.of<UserActivitiesCRUD>(context);
     final activitiesListProvider = Provider.of<ActivitiesListCRUD>(context);
+    final userData = Provider.of<UserProfile>(context);
+
+    List<String> teacherPendingList = userData.teacherPending;
 
     Future<bool> saveForm() async {
       String docId;
@@ -41,14 +45,12 @@ class _AddScheduleState extends State<AddSchedule> {
       if (_formKey.currentState.validate()) {
         _formKey.currentState.save();
 
-        print('location: ' + _location);
-
         await activitiesListProvider.addActivity(_address, _date, _description,
             _endTime, _title, _location, _price, _startTime, _subject, _tag).then((value) => docId = value);
 
-        userActivitiesProvider.addActivity('teacherPending', _address, _date, _description,
-            _endTime, _title, _location, _price, _startTime, _subject, _tag, docId);
+        teacherPendingList.add(docId);
 
+        userActivitiesProvider.addActivity(teacherPendingList);
       }
 
       return _formKey.currentState.validate();

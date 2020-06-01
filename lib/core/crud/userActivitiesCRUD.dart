@@ -11,41 +11,17 @@ class UserActivitiesCRUD extends ChangeNotifier {
   //collection reference
   final CollectionReference userActivitiesCollection =
       Firestore.instance.collection('UserActivities');
+  final CollectionReference usersCollection =
+      Firestore.instance.collection('Users');
 
   //add new activities
-  Future addActivity(
-      String request,
-      String address,
-      String date,
-      String description,
-      String endTime,
-      String title,
-      String location,
-      String price,
-      String startTime,
-      String subject,
-      String tag,
-      String id) async {
-        print(id);
-    return await userActivitiesCollection
-        .document(this.uid)
-        .collection(request)
-        .document(id)
-        .setData({
-      'address': address,
-      'date': date,
-      'description': description,
-      'endTime': endTime,
-      'title': title,
-      'location': location,
-      'price': price,
-      'startTime': startTime,
-      'subject': subject,
-      'tag': tag,
+  Future addActivity(List<String> teacherPending) async {
+    return await usersCollection.document(this.uid).setData({
+      'teacherPending': teacherPending,
     });
   }
 
-  Future<List<Activities>> getActivitiesList( String request) {
+  Future<List<Activities>> getActivitiesList(String request) {
     return userActivitiesCollection
         .document(this.uid)
         .collection(request)
@@ -70,7 +46,8 @@ class UserActivitiesCRUD extends ChangeNotifier {
   }
 
   TeacherPendingList getTeacherPendingActivitiesList() {
-    return TeacherPendingList(teacherPendingList: getActivitiesList('teacherPending'));
+    return TeacherPendingList(
+        teacherPendingList: getActivitiesList('teacherPending'));
   }
 
   TeacherDoneList getTeacherDoneActivitiesList() {

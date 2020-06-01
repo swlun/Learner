@@ -12,8 +12,10 @@ class UserProfile {
   final String id;
   final String userImage;
   final List<String> favourites;
+  final List<String> teacherPending;
+  final List<String> teacherDone;
 
-  UserProfile({this.name, this.age, this.location, this.contactNumber, this.occupation, this.description, this.student, this.teacher, this.joinedIn, this.birthday, this.id, this.userImage, this.favourites});
+  UserProfile({this.name, this.age, this.location, this.contactNumber, this.occupation, this.description, this.student, this.teacher, this.joinedIn, this.birthday, this.id, this.userImage, this.favourites, this.teacherPending, this.teacherDone});
 
   UserProfile.fromMap(Map snapshot, String id) :
     id = id ?? '',
@@ -28,7 +30,9 @@ class UserProfile {
     joinedIn = snapshot['joinedIn'] ?? '',
     birthday = snapshot['birthday'] ?? '',
     userImage = snapshot['userImage'] ?? '',
-    favourites = List.from(snapshot['favourites']) ?? List<String>();
+    favourites = List.from(snapshot['favourites']) ?? List<String>(),
+    teacherPending = List.from(snapshot['teacherPending']) ?? List<String>(),
+    teacherDone = List.from(snapshot['teacherDone']) ?? List<String>();
       
   toJson() {
     return {
@@ -44,7 +48,9 @@ class UserProfile {
       "joinedIn": joinedIn,
       "birthday": birthday,
       "userImage": userImage,
-      "favourites": favourites
+      "favourites": favourites,
+      "teacherPending": teacherPending,
+      "teacherDone": teacherDone
     };
   }
 }  
